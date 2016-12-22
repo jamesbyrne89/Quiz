@@ -83,6 +83,11 @@ answerFour: "Don Cockell"
 }
 );
 
+function selectAnswer(){
+this.toggleClass('selected');
+alert("Selected");
+};
+
 
 // Default question
 
@@ -94,12 +99,15 @@ answerFour: "Don Cockell"
 
 // Grab the next question in array
 
-function nextItem() {
+function nextQuestion() {
 	if (i < (questions.length - 1)){
     i += 1; // increase i by one
     $("#question-number-background").text("Q" + (i+1));
-    console.log(questions.length);
-    return questions[i]; // give us back the item of where we are now
+            $("#question").text(questions[i].question);
+        $("#answer-one").text(questions[i].answerOne);
+        $("#answer-two").text(questions[i].answerTwo);
+        $("#answer-three").text(questions[i].answerThree);
+        $("#answer-four").text(questions[i].answerFour);
     }
 else{
 	return;
@@ -107,20 +115,10 @@ else{
 
 
 
-    $('#submit-answer').on('click', (function() {
 
-
-    	nextItem()
-
-        $("#question").text(questions[i].question);
-        $("#answer-one").text(questions[i].answerOne);
-        $("#answer-two").text(questions[i].answerTwo);
-        $("#answer-three").text(questions[i].answerThree);
-        $("#answer-four").text(questions[i].answerFour);
         $("#answers").removeClass("executed");
         //$("#answers").toggleClass("after");
         
-    })
-    );
-});
 
+
+});
