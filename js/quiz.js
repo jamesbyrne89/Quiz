@@ -1,6 +1,17 @@
 $(document).ready(function(){
 
+// Declare variables
 var i = 0;
+var score = 0;
+
+const questionText = document.getElementById('question');
+
+const answerOne = document.getElementById('answer-one');
+const answerTwo = document.getElementById('answer-two');
+const answerThree = document.getElementById('answer-three');
+const answerFour = document.getElementById('answer-four');
+
+const submit = document.getElementById('submit-answer');
 
 
 // Declare list of questions
@@ -83,19 +94,86 @@ answerFour: "Don Cockell"
 }
 );
 
-function selectAnswer(){
-this.toggleClass('selected');
-alert("Selected");
+var currentQuestion = questions[i];
+var questionNo;
+
+//Add event handler for selecting answer
+
+answerOne.addEventListener('click', function(){
+	this.classList.add('selected');
+	answerTwo.classList.remove('selected');
+	answerThree.classList.remove('selected');
+	answerFour.classList.remove('selected');
+});
+answerTwo.addEventListener('click', function(){
+	this.classList.add('selected');
+	answerOne.classList.remove('selected');
+	answerThree.classList.remove('selected');
+	answerFour.classList.remove('selected');	
+});
+answerThree.addEventListener('click', function(){
+	this.classList.add('selected');
+	answerOne.classList.remove('selected');
+	answerTwo.classList.remove('selected');
+	answerFour.classList.remove('selected');	
+});
+answerFour.addEventListener('click', function(){
+	this.classList.add('selected');
+	answerOne.classList.remove('selected');
+	answerTwo.classList.remove('selected');
+	answerThree.classList.remove('selected');	
+});
+
+// Check answer
+
+function checkAnswer(){
+	if ((questionText.textContent == question1.question) && answerOne.classList.contains('selected')) {
+		score ++;
+		console.log("Current score: " + score);
+} 
+else if ((questionText.textContent == question1.question) && answerOne.classList.contains('selected')) {
+		score ++;
+		console.log("Current score: " + score);
+		}
+else if ((questionText.textContent == question2.question) && answerOne.classList.contains('selected')) {
+		score ++;
+		console.log("Current score: " + score);
+		}
+else if ((questionText.textContent == question3.question) && answerOne.classList.contains('selected')) {
+		score ++;
+		console.log("Current score: " + score);
+		}
+else if ((questionText.textContent == question4.question) && answerOne.classList.contains('selected')) {
+		score ++;
+		console.log("Current score: " + score);
+		}
+else if ((questionText.textContent == question5.question) && answerOne.classList.contains('selected')) {
+		score ++;
+		console.log("Current score: " + score);
+		}
+else if ((questionText.textContent == question6.question) && answerOne.classList.contains('selected')) {
+		score ++;
+		console.log("Current score: " + score);
+		}
+else if ((questionText.textContent == question7.question) && answerOne.classList.contains('selected')) {
+		score ++;
+		console.log("Current score: " + score);
+		}
+else if ((questionText.textContent == question8.question) && answerOne.classList.contains('selected')) {
+		score ++;
+		console.log("Current score: " + score);
+		}	
+else if ((questionText.textContent == question9.question) && answerOne.classList.contains('selected')) {
+		score ++;
+		console.log("Current score: " + score);
+		}
+else if ((questionText.textContent == question10.question) && answerOne.classList.contains('selected')) {
+		score ++;
+		console.log("Current score: " + score);
+		}																						
+else {
+}
 };
-
-
-// Default question
-
-        $("#question").text(questions[i].question);
-        $("#answer-one").text(questions[i].answerOne);
-        $("#answer-two").text(questions[i].answerTwo);
-        $("#answer-three").text(questions[i].answerThree);
-        $("#answer-four").text(questions[i].answerFour);
 
 // Grab the next question in array
 
@@ -103,15 +181,37 @@ function nextQuestion() {
 	if (i < (questions.length - 1)){
     i += 1; // increase i by one
     $("#question-number-background").text("Q" + (i+1));
-            $("#question").text(questions[i].question);
-        $("#answer-one").text(questions[i].answerOne);
-        $("#answer-two").text(questions[i].answerTwo);
-        $("#answer-three").text(questions[i].answerThree);
-        $("#answer-four").text(questions[i].answerFour);
+    var currentQuestion = questions[i];
+        (questionText).textContent=(currentQuestion.question);
+        (answerOne).textContent=(currentQuestion.answerOne);
+        (answerTwo).textContent=(currentQuestion.answerTwo);
+        (answerThree).textContent=(currentQuestion.answerThree);
+        (answerFour).textContent=(currentQuestion.answerFour);
     }
 else{
 	return;
 }}
+
+// Default question
+
+		$("#question").text(questions[i].question);
+        $("#answer-one").text(questions[i].answerOne);
+        $("#answer-two").text(questions[i].answerTwo);
+        $("#answer-three").text(questions[i].answerThree);
+        $("#answer-four").text(questions[i].answerFour);
+
+// Add event handler to submit button
+
+submit.addEventListener('click', function(){
+			checkAnswer();
+	nextQuestion();
+
+	answerOne.classList.remove('selected');
+	answerTwo.classList.remove('selected');
+	answerThree.classList.remove('selected');
+	answerFour.classList.remove('selected');
+
+});
 
 
 
