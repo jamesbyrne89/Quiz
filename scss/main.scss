@@ -19,12 +19,18 @@ body {
 	font-size: 1rem;
 	text-transform: uppercase;
 	color: $nearBlack;
+	a {
+		text-decoration: none;
+			&:hover {
+				border-bottom: solid 5px #fff;
+				cursor: pointer;
+						}
+	}
 }
 
 #app-title {
 	font-size: 5rem;
 	margin: auto;
-	text-align: center;
 	border-top: solid 8px $nearBlack;
 	color: $nearBlack;
 }
@@ -32,19 +38,22 @@ body {
 #wrapper {
 	max-height: 10%;
 	margin: 5vh 0;
-	width: 90%;
+	width: 100%;
 		display: block;
 		display: flex;
 		flex-grow: 0;
 	justify-content: space-between;
+	align-content: center;
+
 }
 
 #question-number-background {
-	font-size: 20rem;
-	line-height: 16.75rem;
+	font-size: 400px;
+	line-height: 400px;
 	font-weight: bold;
+	text-align: right;
 	margin: 0;
-	width: 30vw;
+	width: 50%;
 	color: $darkerGrey;
 	flex: 0 0 auto;
 }
@@ -52,16 +61,14 @@ body {
 .question-answer-wrapper {
 	color: $darkerGrey;
 	background: $paleBlue;	
-	margin-left: 100px;
-	width: 40vw;
+	width: 50%;
 	flex-grow: 0;
 	padding: 2rem;
-
+	font-family: 'roboto mono', helvetica, arial, sans-serif;
 }
 
 #btn-wrapper{
 	display: flex;
-	justify-content: flex-end;
 }
 
 #submit-answer {
@@ -73,6 +80,7 @@ body {
 	cursor: pointer;
 	margin-top: 0.875rem;
 	transition: 0.1s;
+	font-weight: 700;
 	&:hover {
 		background: $darkerGrey;
 	}
@@ -82,7 +90,7 @@ body {
 	margin: 0;
 	padding: 0rem 0rem 1.25rem 0rem;
 	font-size: 1.25rem;
-	min-height: 90px;
+	min-height: 75px;
 	border-bottom: solid 1px $darkerGrey;
 }
 #answers {
@@ -92,23 +100,37 @@ body {
 			li {
 				background: $paleBlue;
 				margin: 0;
-				padding: 0.75rem ;
+				padding: 0.75rem 0rem;
 				font-weight: 300;
 				font-size: 0.875rem;
+				border-bottom: solid 5px $paleBlue;
+				span {
 						&:hover {
-							background: #fff;
+							border-bottom: solid 5px #fff;
 							cursor: pointer;
 						}
+					}
 			}
 		}
 }
-
+.no-show {
+	display: none;
+}
 .selected {
-	background: teal !important;
-	color: #fff !important;
+	border-bottom: solid 5px #fff !important;
 	transition: 0.1s;
 }
+.hidden {
+	visibility: hidden !important;
+}
 
+.score {
+	border-bottom: solid 5px #fff;
+}
+.score:hover {
+	background:none!important;
+	cursor:normal!important;
+				}
   /* for the after stage of the question */
 
   .after {

@@ -13,6 +13,7 @@ const answerFour = document.getElementById('answer-four');
 
 const submit = document.getElementById('submit-answer');
 
+const backgroundQNum = document.getElementById('question-number-background');
 
 // Declare list of questions
 
@@ -95,30 +96,29 @@ answerFour: "Don Cockell"
 );
 
 var currentQuestion = questions[i];
-var questionNo;
 
 //Add event handler for selecting answer
 
 answerOne.addEventListener('click', function(){
-	this.classList.add('selected');
+	this.classList.toggle('selected');
 	answerTwo.classList.remove('selected');
 	answerThree.classList.remove('selected');
 	answerFour.classList.remove('selected');
 });
 answerTwo.addEventListener('click', function(){
-	this.classList.add('selected');
+	this.classList.toggle('selected');
 	answerOne.classList.remove('selected');
 	answerThree.classList.remove('selected');
 	answerFour.classList.remove('selected');	
 });
 answerThree.addEventListener('click', function(){
-	this.classList.add('selected');
+	this.classList.toggle('selected');
 	answerOne.classList.remove('selected');
 	answerTwo.classList.remove('selected');
 	answerFour.classList.remove('selected');	
 });
 answerFour.addEventListener('click', function(){
-	this.classList.add('selected');
+	this.classList.toggle('selected');
 	answerOne.classList.remove('selected');
 	answerTwo.classList.remove('selected');
 	answerThree.classList.remove('selected');	
@@ -127,70 +127,86 @@ answerFour.addEventListener('click', function(){
 // Check answer
 
 function checkAnswer(){
-	if ((questionText.textContent == question1.question) && answerOne.classList.contains('selected')) {
-		score ++;
-		console.log("Current score: " + score);
-} 
-else if ((questionText.textContent == question1.question) && answerOne.classList.contains('selected')) {
-		score ++;
-		console.log("Current score: " + score);
-		}
-else if ((questionText.textContent == question2.question) && answerOne.classList.contains('selected')) {
-		score ++;
-		console.log("Current score: " + score);
-		}
-else if ((questionText.textContent == question3.question) && answerOne.classList.contains('selected')) {
-		score ++;
-		console.log("Current score: " + score);
-		}
-else if ((questionText.textContent == question4.question) && answerOne.classList.contains('selected')) {
-		score ++;
-		console.log("Current score: " + score);
-		}
-else if ((questionText.textContent == question5.question) && answerOne.classList.contains('selected')) {
-		score ++;
-		console.log("Current score: " + score);
-		}
-else if ((questionText.textContent == question6.question) && answerOne.classList.contains('selected')) {
-		score ++;
-		console.log("Current score: " + score);
-		}
-else if ((questionText.textContent == question7.question) && answerOne.classList.contains('selected')) {
-		score ++;
-		console.log("Current score: " + score);
-		}
-else if ((questionText.textContent == question8.question) && answerOne.classList.contains('selected')) {
-		score ++;
-		console.log("Current score: " + score);
-		}	
-else if ((questionText.textContent == question9.question) && answerOne.classList.contains('selected')) {
-		score ++;
-		console.log("Current score: " + score);
-		}
-else if ((questionText.textContent == question10.question) && answerOne.classList.contains('selected')) {
-		score ++;
-		console.log("Current score: " + score);
-		}																						
-else {
-}
+		
+		if ((questionText.textContent == question1.question) && answerOne.classList.contains('selected')) {
+			score ++;
+	} 
+	else if ((questionText.textContent == question1.question) && answerOne.classList.contains('selected')) {
+			score ++;
+			}
+	else if ((questionText.textContent == question2.question) && answerOne.classList.contains('selected')) {
+			score ++;
+			}
+	else if ((questionText.textContent == question3.question) && answerOne.classList.contains('selected')) {
+			score ++;
+			}
+	else if ((questionText.textContent == question4.question) && answerOne.classList.contains('selected')) {
+			score ++;
+			}
+	else if ((questionText.textContent == question5.question) && answerOne.classList.contains('selected')) {
+			score ++;
+			}
+	else if ((questionText.textContent == question6.question) && answerOne.classList.contains('selected')) {
+			score ++;
+			}
+	else if ((questionText.textContent == question7.question) && answerOne.classList.contains('selected')) {
+			score ++;
+			}
+	else if ((questionText.textContent == question8.question) && answerOne.classList.contains('selected')) {
+			score ++;
+			}	
+	else if ((questionText.textContent == question9.question) && answerOne.classList.contains('selected')) {
+			score ++;
+			}
+	else if ((questionText.textContent == question10.question) && answerOne.classList.contains('selected')) {
+			score ++;
+			}																							
+	else {
+		return;
+	}
 };
 
 // Grab the next question in array
 
 function nextQuestion() {
 	if (i < (questions.length - 1)){
-    i += 1; // increase i by one
-    $("#question-number-background").text("Q" + (i+1));
-    var currentQuestion = questions[i];
+		// Check that at least one answer has been selected
+		if ((answerOne).classList.contains('selected') ||
+	(answerTwo).classList.contains('selected') ||
+	(answerThree).classList.contains('selected') ||
+	(answerFour).classList.contains('selected')){
+    i ++; // increase i by one
+    $("#question-number-background").text("Q" + (i + 1));
+    currentQuestion = questions[i];
         (questionText).textContent=(currentQuestion.question);
         (answerOne).textContent=(currentQuestion.answerOne);
         (answerTwo).textContent=(currentQuestion.answerTwo);
         (answerThree).textContent=(currentQuestion.answerThree);
         (answerFour).textContent=(currentQuestion.answerFour);
     }
+    else {
+alert('please choose');
+return;
+}
+    }
+    else if (i == (questions.length - 1)) {
+    	$("#question-number-background").text("");
+    	        (questionText).textContent=("Quiz completed!");
+        (answerOne).textContent=("");
+        (answerTwo).textContent=("You scored: " + score + "/10");
+        (answerThree).textContent=("");
+        (answerFour).textContent=("");
+	answerOne.classList.add('hidden');
+	answerTwo.classList.add('score');
+	answerTwo.classList.remove('answer');	
+	answerThree.classList.add('hidden');
+	answerFour.classList.add('hidden');
+	(submit).textContent=("Start again");
+	backgroundQNum.classList.add('no-show');
+    }
 else{
 	return;
-}}
+}};
 
 // Default question
 
@@ -204,8 +220,7 @@ else{
 
 submit.addEventListener('click', function(){
 			checkAnswer();
-	nextQuestion();
-
+			nextQuestion();
 	answerOne.classList.remove('selected');
 	answerTwo.classList.remove('selected');
 	answerThree.classList.remove('selected');
@@ -213,6 +228,7 @@ submit.addEventListener('click', function(){
 
 });
 
+// Add event handler to restart button
 
 
 
