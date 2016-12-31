@@ -3,39 +3,42 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Mini Quiz</title>
+        <title>Mini Quiz by James Byrne | Front End Developer in London</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <!-- Place favicon.ico in the root directory -->
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Roboto+Mono:300,400" rel="stylesheet">
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
     </head>
     <body>
+    <div id="app-wrapper">
         <h2 id="subtitle">A coding project by <a href="http://jamestbyrne.com">James Byrne</a></h2>
         <h1 id="app-title">Mini Quiz</h1>
         <div id ="wrapper">
+                <h2 id="question-number-background">01</h2>
         <div class="question-answer-wrapper">
         <h2 id="question"></h2>
         <div id="answers">
      <ul>
-       <li><span id="answer-one" class="answer"></span>
-        <li><span id="answer-two" class="answer"></span>
-        <li><span id="answer-three" class="answer"></span>
-       <li> <span id="answer-four" class="answer"></span>
+       <li><button id="answer-one" class="answer"></button>
+        <li><button id="answer-two" class="answer"></button>
+        <li><button id="answer-three" class="answer"></button>
+       <li> <button id="answer-four" class="answer"></button>
         </ul>  
         <div id="btn-wrapper">
-        <button id="submit-answer">Submit</button>
+        <button id="submit-answer" class="btn">Submit</button>
+        <button id="restart-quiz" class="btn hidden">Submit</button>
         </div>
         </div>    
 
         </div>
-        <h2 id="question-number-background">Q1</h2>
-        </div>
 
+        </div>
+</div>
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
         <script src="js/quiz.js"></script>

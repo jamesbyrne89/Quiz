@@ -131,33 +131,30 @@ function checkAnswer(){
 		if ((questionText.textContent == question1.question) && answerOne.classList.contains('selected')) {
 			score ++;
 	} 
-	else if ((questionText.textContent == question1.question) && answerOne.classList.contains('selected')) {
+	else if ((questionText.textContent == question2.question) && answerThree.classList.contains('selected')) {
 			score ++;
 			}
-	else if ((questionText.textContent == question2.question) && answerOne.classList.contains('selected')) {
-			score ++;
-			}
-	else if ((questionText.textContent == question3.question) && answerOne.classList.contains('selected')) {
+	else if ((questionText.textContent == question3.question) && answerThree.classList.contains('selected')) {
 			score ++;
 			}
 	else if ((questionText.textContent == question4.question) && answerOne.classList.contains('selected')) {
 			score ++;
 			}
-	else if ((questionText.textContent == question5.question) && answerOne.classList.contains('selected')) {
+	else if ((questionText.textContent == question5.question) && answerThree.classList.contains('selected')) {
 			score ++;
 			}
-	else if ((questionText.textContent == question6.question) && answerOne.classList.contains('selected')) {
+	else if ((questionText.textContent == question6.question) && answerThree.classList.contains('selected')) {
 			score ++;
 			}
-	else if ((questionText.textContent == question7.question) && answerOne.classList.contains('selected')) {
+	else if ((questionText.textContent == question7.question) && answerThree.classList.contains('selected')) {
 			score ++;
 			}
 	else if ((questionText.textContent == question8.question) && answerOne.classList.contains('selected')) {
 			score ++;
-			}	
+			}
 	else if ((questionText.textContent == question9.question) && answerOne.classList.contains('selected')) {
 			score ++;
-			}
+			}	
 	else if ((questionText.textContent == question10.question) && answerOne.classList.contains('selected')) {
 			score ++;
 			}																							
@@ -176,7 +173,12 @@ function nextQuestion() {
 	(answerThree).classList.contains('selected') ||
 	(answerFour).classList.contains('selected')){
     i ++; // increase i by one
-    $("#question-number-background").text("Q" + (i + 1));
+if (i < 9){
+    $("#question-number-background").text("0" + (i + 1));
+}
+else {
+	$("#question-number-background").text((i + 1));
+}
     currentQuestion = questions[i];
         (questionText).textContent=(currentQuestion.question);
         (answerOne).textContent=(currentQuestion.answerOne);
@@ -185,7 +187,7 @@ function nextQuestion() {
         (answerFour).textContent=(currentQuestion.answerFour);
     }
     else {
-alert('please choose');
+alert('Please choose an answer first!');
 return;
 }
     }

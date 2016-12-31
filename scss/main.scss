@@ -4,40 +4,92 @@ $darkerGrey: #747474;
 $nearBlack: #212221;
 $offWhite: #fbfbf9;
 
-* {
-	box-sizing: border-box;
+// CSS Reset
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
+//Styles
 body {
 	background: $paleGrey;
+	overflow: hidden;
+}
+#app-wrapper {
 	font-family: 'poppins', helvetica, arial, sans-serif;
-	padding: 1.25rem;
-
+	padding: 5vh 5vw 0 5vw;
+	height: auto;
+	margin: 0px;
 }
 
 #subtitle {
 	font-size: 1rem;
 	text-transform: uppercase;
 	color: $nearBlack;
+	padding-bottom: 1.25rem;
 	a {
 		text-decoration: none;
+		&:visited {
+			color: $paleBlue;
+		}
 			&:hover {
 				border-bottom: solid 5px #fff;
 				cursor: pointer;
 						}
-	}
+		}
+	
 }
 
 #app-title {
 	font-size: 5rem;
 	margin: auto;
+	padding-top: 1.25rem;
 	border-top: solid 8px $nearBlack;
 	color: $nearBlack;
 }
 
 #wrapper {
 	max-height: 10%;
-	margin: 5vh 0;
+	margin: 100px 0 0 0;
 	width: 100%;
 		display: block;
 		display: flex;
@@ -48,10 +100,9 @@ body {
 }
 
 #question-number-background {
-	font-size: 400px;
+	font-size: 440px;
 	line-height: 400px;
 	font-weight: bold;
-	text-align: right;
 	margin: 0;
 	width: 50%;
 	color: $darkerGrey;
@@ -60,10 +111,9 @@ body {
 
 .question-answer-wrapper {
 	color: $darkerGrey;
-	background: $paleBlue;	
 	width: 50%;
 	flex-grow: 0;
-	padding: 2rem;
+	padding-top: 1.25rem;
 	font-family: 'roboto mono', helvetica, arial, sans-serif;
 }
 
@@ -71,7 +121,7 @@ body {
 	display: flex;
 }
 
-#submit-answer {
+.btn {
 	color: $offWhite;
 	background: $nearBlack;
 	padding: 0.5rem 1rem;
@@ -88,25 +138,31 @@ body {
 
 #question {
 	margin: 0;
-	padding: 0rem 0rem 1.25rem 0rem;
+	padding: 0rem 0rem 0.675rem 0rem;
 	font-size: 1.25rem;
-	min-height: 75px;
-	border-bottom: solid 1px $darkerGrey;
+	min-height: 40px;
+	width: auto;
 }
 #answers {
 		ul {
 			list-style: none;
 			padding: 0;
+			margin-top: 1.25rem;
 			li {
-				background: $paleBlue;
 				margin: 0;
 				padding: 0.75rem 0rem;
 				font-weight: 300;
 				font-size: 0.875rem;
-				border-bottom: solid 5px $paleBlue;
-				span {
+				button {
+					font-family: 'roboto mono', helvetica, arial, sans-serif;
+					background: none;
+					border: none;
+					border-bottom: solid 5px $paleGrey;
+					color: $darkerGrey;
+					outline: none;
+					padding: 0;
 						&:hover {
-							border-bottom: solid 5px #fff;
+							border-bottom: solid 5px $paleBlue;
 							cursor: pointer;
 						}
 					}
@@ -117,7 +173,7 @@ body {
 	display: none;
 }
 .selected {
-	border-bottom: solid 5px #fff !important;
+	border-bottom: solid 5px $paleBlue !important;
 	transition: 0.1s;
 }
 .hidden {
@@ -125,11 +181,13 @@ body {
 }
 
 .score {
-	border-bottom: solid 5px #fff;
+	border-bottom: solid 5px $paleBlue !important;
+	font-size: 1.75rem;
 }
 .score:hover {
 	background:none!important;
 	cursor:normal!important;
+	border-bottom: solid 5px $paleBlue !important;
 				}
   /* for the after stage of the question */
 
