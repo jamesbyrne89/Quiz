@@ -12,6 +12,7 @@ const answerThree = document.getElementById('answer-three');
 const answerFour = document.getElementById('answer-four');
 
 const submit = document.getElementById('submit-answer');
+const restart = document.getElementById('restart-quiz');
 
 const backgroundQNum = document.getElementById('question-number-background');
 
@@ -104,26 +105,42 @@ answerOne.addEventListener('click', function(){
 	answerTwo.classList.remove('selected');
 	answerThree.classList.remove('selected');
 	answerFour.classList.remove('selected');
+	this.classList.toggle('unselected');
+	answerTwo.classList.add('unselected');
+	answerThree.classList.add('unselected');
+	answerFour.classList.add('unselected');
 });
 answerTwo.addEventListener('click', function(){
 	this.classList.toggle('selected');
 	answerOne.classList.remove('selected');
 	answerThree.classList.remove('selected');
-	answerFour.classList.remove('selected');	
+	answerFour.classList.remove('selected');
+	this.classList.toggle('unselected');
+	answerOne.classList.add('unselected');
+	answerThree.classList.add('unselected');
+	answerFour.classList.add('unselected');	
 });
 answerThree.addEventListener('click', function(){
 	this.classList.toggle('selected');
 	answerOne.classList.remove('selected');
 	answerTwo.classList.remove('selected');
-	answerFour.classList.remove('selected');	
+	answerFour.classList.remove('selected');
+	this.classList.toggle('unselected');
+	answerOne.classList.add('unselected');
+	answerTwo.classList.add('unselected');
+	answerFour.classList.add('unselected');		
 });
 answerFour.addEventListener('click', function(){
 	this.classList.toggle('selected');
 	answerOne.classList.remove('selected');
 	answerTwo.classList.remove('selected');
-	answerThree.classList.remove('selected');	
+	answerThree.classList.remove('selected');
+	this.classList.toggle('unselected');
+	answerOne.classList.add('unselected');
+	answerTwo.classList.add('unselected');
+	answerThree.classList.add('unselected');		
 });
-
+console.log(questions.length);
 // Check answer
 
 function checkAnswer(){
@@ -163,35 +180,9 @@ function checkAnswer(){
 	}
 };
 
-// Grab the next question in array
+// Display the score
 
-function nextQuestion() {
-	if (i < (questions.length - 1)){
-		// Check that at least one answer has been selected
-		if ((answerOne).classList.contains('selected') ||
-	(answerTwo).classList.contains('selected') ||
-	(answerThree).classList.contains('selected') ||
-	(answerFour).classList.contains('selected')){
-    i ++; // increase i by one
-if (i < 9){
-    $("#question-number-background").text("0" + (i + 1));
-}
-else {
-	$("#question-number-background").text((i + 1));
-}
-    currentQuestion = questions[i];
-        (questionText).textContent=(currentQuestion.question);
-        (answerOne).textContent=(currentQuestion.answerOne);
-        (answerTwo).textContent=(currentQuestion.answerTwo);
-        (answerThree).textContent=(currentQuestion.answerThree);
-        (answerFour).textContent=(currentQuestion.answerFour);
-    }
-    else {
-alert('Please choose an answer first!');
-return;
-}
-    }
-    else if (i == (questions.length - 1)) {
+function showScore(){
     	$("#question-number-background").text("");
     	        (questionText).textContent=("Quiz completed!");
         (answerOne).textContent=("");
@@ -203,12 +194,63 @@ return;
 	answerTwo.classList.remove('answer');	
 	answerThree.classList.add('hidden');
 	answerFour.classList.add('hidden');
-	(submit).textContent=("Start again");
-	backgroundQNum.classList.add('no-show');
+	(submit).classList.add("no-show");
+	(restart).classList.remove("no-show");
+	backgroundQNum.classList.add('hidden');
+};
+
+
+// Grab the next question in array
+
+function nextQuestion() {
+	if (i < (questions.length - 1)){
+    i ++; // increase i by one
     }
-else{
-	return;
-}};
+    else if (i == (questions.length - 1)) {
+    	showScore();
+    }
+};
+
+// Place next question into HTML
+
+function displayQuestion(){
+	if (i < (questions.length - 1)){
+	     currentQuestion = questions[i];
+        (questionText).textContent=(currentQuestion.question);
+        (answerOne).textContent=(currentQuestion.answerOne);
+        (answerTwo).textContent=(currentQuestion.answerTwo);
+        (answerThree).textContent=(currentQuestion.answerThree);
+        (answerFour).textContent=(currentQuestion.answerFour);
+    }
+}
+
+// Change background question number
+function questNumZero(){
+        	if (i < 9){
+    		$("#question-number-background").text("0" + (i + 1));
+			}
+		else {
+			$("#question-number-background").text((i + 1));
+		} 
+}
+
+// Check that at least one answer was selected
+
+function checkSelected () {
+	if (i < (questions.length - 1)){
+		// Check that at least one answer has been selected
+		if ((answerOne).classList.contains('unselected') ||
+	(answerTwo).classList.contains('unselected') ||
+	(answerThree).classList.contains('unselected') ||
+	(answerFour).classList.contains('unselected'))
+
+		{
+			var noneSelected = true;
+    alert('Please choose an answer first!');
+	return; // increase i by one
+}
+}
+};
 
 // Default question
 
@@ -223,16 +265,39 @@ else{
 submit.addEventListener('click', function(){
 			checkAnswer();
 			nextQuestion();
-	answerOne.classList.remove('selected');
-	answerTwo.classList.remove('selected');
-	answerThree.classList.remove('selected');
-	answerFour.classList.remove('selected');
+			displayQuestion();
+			questNumZero();	
+			checkSelected();	
+	answerOne.classList.remove('unselected');
+	answerTwo.classList.remove('unselected');
+	answerThree.classList.remove('unselected');
+	answerFour.classList.remove('unselected');
 
 });
 
 // Add event handler to restart button
 
+restart.addEventListener('click', function(){
+	// Add text to question and answers	
+    	i=0;
 
+		displayQuestion();
+		questNumZero();	
+		console.log(noneSelected);
+		if (noneSelected){
+			return;
+		}
+    // Unhide question and answers
+    answerOne.classList.remove('hidden');
+	answerTwo.classList.remove('score');
+	answerTwo.classList.remove('answer');	
+	answerThree.classList.remove('hidden');
+	answerFour.classList.remove('hidden');
+	backgroundQNum.classList.remove('hidden');
+	backgroundQNum.classList.textContent=('01');
+	(submit).classList.remove("no-show");
+	(restart).classList.add("no-show");
+});
 
         $("#answers").removeClass("executed");
         //$("#answers").toggleClass("after");

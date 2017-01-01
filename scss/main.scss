@@ -52,7 +52,6 @@ table {
 //Styles
 body {
 	background: $paleGrey;
-	overflow: hidden;
 }
 #app-wrapper {
 	font-family: 'poppins', helvetica, arial, sans-serif;
@@ -94,6 +93,7 @@ body {
 		display: block;
 		display: flex;
 		flex-grow: 0;
+		flex-wrap: wrap;
 	justify-content: space-between;
 	align-content: center;
 
@@ -106,13 +106,13 @@ body {
 	margin: 0;
 	width: 50%;
 	color: $darkerGrey;
-	flex: 0 0 auto;
+	flex: 0 1 500px;
 }
 
 .question-answer-wrapper {
 	color: $darkerGrey;
 	width: 50%;
-	flex-grow: 0;
+	flex: 0 1 500px;
 	padding-top: 1.25rem;
 	font-family: 'roboto mono', helvetica, arial, sans-serif;
 }
@@ -122,17 +122,21 @@ body {
 }
 
 .btn {
-	color: $offWhite;
-	background: $nearBlack;
-	padding: 0.5rem 1rem;
+	color: $nearBlack;
+	background: $paleGrey;
 	font-family: 'poppins', helvetica, arial, sans-serif;
 	border: none;
 	cursor: pointer;
 	margin-top: 0.875rem;
-	transition: 0.1s;
+	transition: 0.05s;
 	font-weight: 700;
+	font-size: 1.25rem;
+	&:before {
+		content: "-";
+		margin-right: 0.5rem;
+	}
 	&:hover {
-		background: $darkerGrey;
+		border-bottom: solid 5px $nearBlack;
 	}
 }
 
@@ -148,6 +152,7 @@ body {
 			list-style: none;
 			padding: 0;
 			margin-top: 1.25rem;
+			margin-bottom: 1.25rem;
 			li {
 				margin: 0;
 				padding: 0.75rem 0rem;
@@ -161,9 +166,11 @@ body {
 					color: $darkerGrey;
 					outline: none;
 					padding: 0;
+					
 						&:hover {
 							border-bottom: solid 5px $paleBlue;
 							cursor: pointer;
+							transition: 0.05s;
 						}
 					}
 			}
@@ -186,7 +193,7 @@ body {
 }
 .score:hover {
 	background:none!important;
-	cursor:normal!important;
+	cursor:default!important;
 	border-bottom: solid 5px $paleBlue !important;
 				}
   /* for the after stage of the question */
@@ -227,4 +234,54 @@ input {
     border: 2px solid #fff;
     border-radius: 50%;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 900px) {
+ #question-number-background {
+ 	font-size: 400px;
+ 	line-height: 400px;
+ }
+ #wrapper {
+ 	margin: 50px 0px;
+ }
+}
+
+@media (max-width: 600px) {
+ #question-number-background {
+ 	font-size: 300px;
+ 	line-height: 300px;
+ }
+ #wrapper {
+ 	margin: 50px 0px;
+ }
+ #app-title {
+ 	font-size: 4.5rem;
+ }
+}
+
+@media (max-width: 400px) {
+ #question-number-background {
+ 	font-size: 100px;
+ 	line-height: 80px;
+ }
+ #wrapper {
+ 	margin: 20px 0px;
+ }
+ #app-title {
+ 	font-size: 3rem;
+ 	padding-top: 0.5rem;
+ }
+ #subtitle {
+ 	font-size: 0.75rem;
+ 	padding-bottom: 0.5rem;
+ }
+ #question {
+ 	padding-bottom: 0;
+ }
+ #answers ul li {
+ 	padding: 0.25rem 0px;
+ }
+ .btn {
+ 	margin-top: 0;
+ }
 }
