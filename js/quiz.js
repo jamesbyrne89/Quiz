@@ -15,7 +15,8 @@ const submit = document.getElementById('submit-answer');
 const restart = document.getElementById('restart-quiz');
 
 const backgroundQNum = document.getElementById('question-number-background');
-
+var rightAnswers = [];
+var wrongAnswers = [];
 // Declare list of questions
 
 const questions = new Array(
@@ -139,44 +140,75 @@ answerFour.addEventListener('click', function(){
 	answerThree.classList.add('unselected');		
 });
 
+
+
+
+
+
 // Check answer
 
 function checkAnswer(){
-		
+		var chosenAnswer = document.getElementsByClassName('selected')[0].textContent;
 		if ((questionText.textContent == question1.question) && answerOne.classList.contains('selected')) {
 			score ++;
+			rightAnswers.push(chosenAnswer);
+			console.log(answerOne);
+			console.log(chosenAnswer);
+			console.log('Right answers: ' + rightAnswers);
 	} 
 	else if ((questionText.textContent == question2.question) && answerThree.classList.contains('selected')) {
+		correctAnswers.push(question2.question, question2.answerThree);
 			score ++;
+			rightAnswers.push(chosenAnswer);
+			console.log('Right answers: ' + rightAnswers);
 			}
 	else if ((questionText.textContent == question3.question) && answerThree.classList.contains('selected')) {
 			score ++;
+			rightAnswers.push(chosenAnswer);
+			console.log('Right answers: ' + rightAnswers);
 			}
 	else if ((questionText.textContent == question4.question) && answerOne.classList.contains('selected')) {
 			score ++;
+			rightAnswers.push(chosenAnswer);
+			console.log('Right answers: ' + rightAnswers);
 			}
 	else if ((questionText.textContent == question5.question) && answerThree.classList.contains('selected')) {
 			score ++;
+			rightAnswers.push(chosenAnswer);
+			console.log('Right answers: ' + rightAnswers);
 			}
 	else if ((questionText.textContent == question6.question) && answerThree.classList.contains('selected')) {
 			score ++;
+			rightAnswers.push(chosenAnswer);
+			console.log('Right answers: ' + rightAnswers);
 			}
 	else if ((questionText.textContent == question7.question) && answerThree.classList.contains('selected')) {
 			score ++;
+			rightAnswers.push(chosenAnswer);
+			console.log('Right answers: ' + rightAnswers);
 			}
 	else if ((questionText.textContent == question8.question) && answerOne.classList.contains('selected')) {
 			score ++;
+			rightAnswers.push(chosenAnswer);
+			console.log('Right answers: ' + rightAnswers);
 			}
 	else if ((questionText.textContent == question9.question) && answerOne.classList.contains('selected')) {
 			score ++;
+			rightAnswers.push(chosenAnswer);
+			console.log('Right answers: ' + rightAnswers);
 			}	
 	else if ((questionText.textContent == question10.question) && answerOne.classList.contains('selected')) {
 			score ++;
-			}																							
-	else {
-		return;
+			rightAnswers.push(chosenAnswer);
+			console.log('Right answers: ' + rightAnswers);
+			}
+			else {
+				wrongAnswers.push(chosenAnswer);
+				console.log("Wrong answers: " + wrongAnswers);	
 	}
 };
+
+
 
 // Display the score
 
