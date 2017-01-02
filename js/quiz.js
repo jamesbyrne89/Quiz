@@ -19,7 +19,6 @@ const backgroundQNum = document.getElementById('question-number-background');
 // Declare list of questions
 
 const questions = new Array(
-
 question1 = {
 question: "Who is the patron saint of Spain?",
 answerOne: "Saint James",
@@ -95,7 +94,7 @@ answerThree: "Terry Spinks",
 answerFour: "Don Cockell"
 }
 );
-
+console.log(questions.length - 1);
 var currentQuestion = questions[i];
 
 //Add event handler for selecting answer
@@ -140,7 +139,7 @@ answerFour.addEventListener('click', function(){
 	answerTwo.classList.add('unselected');
 	answerThree.classList.add('unselected');		
 });
-console.log(questions.length);
+
 // Check answer
 
 function checkAnswer(){
@@ -203,24 +202,40 @@ function showScore(){
 // Grab the next question in array
 
 function nextQuestion() {
-	if (i < (questions.length - 1)){
+	if (i < (questions.length)){
     i ++; // increase i by one
+    console.log(i);
+    		console.log(questions.length);
+
+    answerOne.classList.remove('selected');
+	answerTwo.classList.remove('selected');
+	answerThree.classList.remove('selected');
+	answerFour.classList.remove('selected');
+    answerOne.classList.add('unselected');
+	answerTwo.classList.add('unselected');
+	answerThree.classList.add('unselected');
+	answerFour.classList.add('unselected');	
     }
-    else if (i == (questions.length - 1)) {
+    else if (i == (questions.length)) {
     	showScore();
+    	console.log('Show the score');
     }
 };
 
 // Place next question into HTML
 
 function displayQuestion(){
-	if (i < (questions.length - 1)){
+	if (i < (questions.length)){
+					console.log('displayQuestion');
 	     currentQuestion = questions[i];
         (questionText).textContent=(currentQuestion.question);
         (answerOne).textContent=(currentQuestion.answerOne);
         (answerTwo).textContent=(currentQuestion.answerTwo);
         (answerThree).textContent=(currentQuestion.answerThree);
         (answerFour).textContent=(currentQuestion.answerFour);
+    }
+        else if (i == (questions.length)) {
+    	showScore();
     }
 }
 
@@ -236,21 +251,6 @@ function questNumZero(){
 
 // Check that at least one answer was selected
 
-function checkSelected () {
-	if (i < (questions.length - 1)){
-		// Check that at least one answer has been selected
-		if ((answerOne).classList.contains('unselected') ||
-	(answerTwo).classList.contains('unselected') ||
-	(answerThree).classList.contains('unselected') ||
-	(answerFour).classList.contains('unselected'))
-
-		{
-			var noneSelected = true;
-    alert('Please choose an answer first!');
-	return; // increase i by one
-}
-}
-};
 
 // Default question
 
@@ -263,16 +263,19 @@ function checkSelected () {
 // Add event handler to submit button
 
 submit.addEventListener('click', function(){
-			checkAnswer();
+				checkAnswer();
+		// Check that at least one answer has been selected
+		if ((answerOne).classList.contains('unselected') &&
+	(answerTwo).classList.contains('unselected') &&
+	(answerThree).classList.contains('unselected') &&
+	(answerFour).classList.contains('unselected'))
+		{
+    alert('Please choose an answer first!');
+	return; 
+		}
 			nextQuestion();
 			displayQuestion();
 			questNumZero();	
-			checkSelected();	
-	answerOne.classList.remove('unselected');
-	answerTwo.classList.remove('unselected');
-	answerThree.classList.remove('unselected');
-	answerFour.classList.remove('unselected');
-
 });
 
 // Add event handler to restart button
@@ -280,13 +283,10 @@ submit.addEventListener('click', function(){
 restart.addEventListener('click', function(){
 	// Add text to question and answers	
     	i=0;
-
+    	score=0;
 		displayQuestion();
 		questNumZero();	
-		console.log(noneSelected);
-		if (noneSelected){
-			return;
-		}
+
     // Unhide question and answers
     answerOne.classList.remove('hidden');
 	answerTwo.classList.remove('score');
@@ -297,6 +297,15 @@ restart.addEventListener('click', function(){
 	backgroundQNum.classList.textContent=('01');
 	(submit).classList.remove("no-show");
 	(restart).classList.add("no-show");
+
+	    answerOne.classList.remove('selected');
+	answerTwo.classList.remove('selected');
+	answerThree.classList.remove('selected');
+	answerFour.classList.remove('selected');
+    answerOne.classList.add('unselected');
+	answerTwo.classList.add('unselected');
+	answerThree.classList.add('unselected');
+	answerFour.classList.add('unselected');	
 });
 
         $("#answers").removeClass("executed");
