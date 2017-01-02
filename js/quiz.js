@@ -94,7 +94,6 @@ answerThree: "Terry Spinks",
 answerFour: "Don Cockell"
 }
 );
-console.log(questions.length - 1);
 var currentQuestion = questions[i];
 
 //Add event handler for selecting answer
@@ -183,13 +182,13 @@ function checkAnswer(){
 
 function showScore(){
     	$("#question-number-background").text("");
-    	        (questionText).textContent=("Quiz completed!");
-        (answerOne).textContent=("");
-        (answerTwo).textContent=("You scored: " + score + "/10");
+    	(questionText).textContent=("Quiz completed!");
+        (answerOne).textContent=("You scored: " + score + "/10");
+        (answerTwo).textContent=("");
         (answerThree).textContent=("");
         (answerFour).textContent=("");
-	answerOne.classList.add('hidden');
-	answerTwo.classList.add('score');
+	answerOne.classList.add('score');
+	answerTwo.classList.add('hidden');
 	answerTwo.classList.remove('answer');	
 	answerThree.classList.add('hidden');
 	answerFour.classList.add('hidden');
@@ -204,9 +203,6 @@ function showScore(){
 function nextQuestion() {
 	if (i < (questions.length)){
     i ++; // increase i by one
-    console.log(i);
-    		console.log(questions.length);
-
     answerOne.classList.remove('selected');
 	answerTwo.classList.remove('selected');
 	answerThree.classList.remove('selected');
@@ -218,7 +214,6 @@ function nextQuestion() {
     }
     else if (i == (questions.length)) {
     	showScore();
-    	console.log('Show the score');
     }
 };
 
@@ -226,7 +221,6 @@ function nextQuestion() {
 
 function displayQuestion(){
 	if (i < (questions.length)){
-					console.log('displayQuestion');
 	     currentQuestion = questions[i];
         (questionText).textContent=(currentQuestion.question);
         (answerOne).textContent=(currentQuestion.answerOne);
@@ -288,9 +282,10 @@ restart.addEventListener('click', function(){
 		questNumZero();	
 
     // Unhide question and answers
-    answerOne.classList.remove('hidden');
-	answerTwo.classList.remove('score');
-	answerTwo.classList.remove('answer');	
+
+	answerOne.classList.remove('score');
+	answerOne.classList.remove('answer');	
+	answerTwo.classList.remove('hidden');
 	answerThree.classList.remove('hidden');
 	answerFour.classList.remove('hidden');
 	backgroundQNum.classList.remove('hidden');
@@ -298,7 +293,7 @@ restart.addEventListener('click', function(){
 	(submit).classList.remove("no-show");
 	(restart).classList.add("no-show");
 
-	    answerOne.classList.remove('selected');
+	answerOne.classList.remove('selected');
 	answerTwo.classList.remove('selected');
 	answerThree.classList.remove('selected');
 	answerFour.classList.remove('selected');
