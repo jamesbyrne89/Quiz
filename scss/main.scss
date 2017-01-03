@@ -4,7 +4,7 @@ $darkerGrey: #747474;
 $nearBlack: #212221;
 $offWhite: #fbfbf9;
 $burntRed: #FF6961;
-$pastelGreen: 	#77DD77;
+$pastelGreen: 	#83C99C;
 
 // CSS Reset
 
@@ -111,12 +111,13 @@ body {
 	flex: 0 1 500px;
 }
 
-.question-answer-wrapper {
+#question-answer-wrapper {
 	color: $darkerGrey;
 	width: 50%;
 	flex: 0 1 500px;
 	padding-top: 1.25rem;
 	font-family: 'roboto mono', helvetica, arial, sans-serif;
+	position: relative;
 }
 
 #btn-wrapper{
@@ -151,6 +152,10 @@ body {
 	font-size: 1.25rem;
 	min-height: 80px;
 	width: auto;
+    -webkit-transition: all 0.5s ease-in-out;
+      -moz-transition: all 0.5s ease-in-out;
+      -o-transition: all 0.5s ease-in-out;
+      transition: all 0.5s ease-in-out;	
 }
 #answers {
 		ul {
@@ -181,6 +186,29 @@ body {
 			}
 		}
 }
+
+ .executed {
+    opacity:1;
+    right: 0;
+    -webkit-transition: all 0.2s ;
+      -moz-transition: all 0.2s ;
+      -o-transition: all 0.2s ;
+      transition: all 0.2s ;
+  }
+
+    .reset {
+    position: absolute;
+    opacity:0 !important;
+    right:-600px !important;
+    -webkit-transition: all 0.75s ease-out;
+      -moz-transition: all 0.75s ease-out;
+      -o-transition: all 0.75s ease-out;
+      transition: all 0.75s ease-out;
+  }
+
+   .fade {
+    opacity:0 !important;
+  }
 
 #correct-answers-box {
 		color: $darkerGrey;
@@ -252,31 +280,8 @@ body {
 	cursor:default!important;
 	border-bottom: solid 5px $paleBlue !important;
 				}
-  /* for the after stage of the question */
 
-  .after {
-    opacity:0 !important;
-  }
-  /* for the after stage of the answers.*/
 
-  .executed {
-    opacity:1;
-    right: 0;
-    -webkit-transition: all 2s ease-in-out;
-      -moz-transition: all 2s ease-in-out;
-      -o-transition: all 2s ease-in-out;
-      transition: all 2s ease-in-out;
-  }
-  /* for the before stage of the answers; should slide right when presented and left when removed.  */
-
-  .change {
-    opacity:0;
-    right:600;
-    -webkit-transition: all 0.3s ease-in-out;
-      -moz-transition: all 0.3s ease-in-out;
-      -o-transition: all 0.3s ease-in-out;
-      transition: all 0.3s ease-in-out;
-  }
 
 input {
 	display: inline-block;

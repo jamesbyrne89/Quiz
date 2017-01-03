@@ -5,7 +5,8 @@ $(document).ready(function() {
     var score = 0;
 
     const questionText = document.getElementById('question');
-
+    const questionAnswers = document.getElementById('answers');
+    const questAnsWrapper = document.getElementById('question-answer-wrapper');
     const answerOne = document.getElementById('answer-one');
     const answerTwo = document.getElementById('answer-two');
     const answerThree = document.getElementById('answer-three');
@@ -296,6 +297,17 @@ $(document).ready(function() {
     function nextQuestion() {
         if (i < (questions.length)) {
             i++; // increase i by one
+                    questionAnswers.classList.add('reset');  
+            questionAnswers.classList.remove('executed');
+            questionAnswers.classList.add('reset');
+            questionAnswers.classList.remove('executed');
+            questionText.classList.toggle("fade");
+        setTimeout(function(){ 
+            questionAnswers.classList.remove('reset');  
+            questionAnswers.classList.add('executed');
+            questionAnswers.classList.remove('reset');
+            questionAnswers.classList.add('executed'); 
+            questionText.classList.toggle("fade");
             answerOne.classList.remove('selected');
             answerTwo.classList.remove('selected');
             answerThree.classList.remove('selected');
@@ -304,6 +316,8 @@ $(document).ready(function() {
             answerTwo.classList.add('unselected');
             answerThree.classList.add('unselected');
             answerFour.classList.add('unselected');
+            console.log('triggered');
+             }, 1000);   
         } else if (i == (questions.length)) {
             showScore();
         }
@@ -313,13 +327,18 @@ $(document).ready(function() {
 
     function displayQuestion() {
         if (i < (questions.length)) {
-            currentQuestion = questions[i];
+
+                    currentQuestion = questions[i];
             (questionText).textContent = (currentQuestion.question);
             (answerOne).textContent = (currentQuestion.answerOne);
             (answerTwo).textContent = (currentQuestion.answerTwo);
             (answerThree).textContent = (currentQuestion.answerThree);
             (answerFour).textContent = (currentQuestion.answerFour);
+               
+
+
         } else if (i == (questions.length)) {
+                    questionAnswers.classList.remove('executed'); 
             showScore();
         }
     }
@@ -356,10 +375,13 @@ $(document).ready(function() {
             alert('Please choose an answer first!');
             return;
         }
+         
         nextQuestion();
         displayQuestion();
         questNumZero();
-        console.log(answerList.childNodes);
+
+
+        
     });
 
     // Add event handler to restart button
@@ -399,8 +421,6 @@ $(document).ready(function() {
 
         answerBox.classList.add('no-show');
         answerBoxTitle.classList.add('no-show'); 
-
-
 
     });
 
