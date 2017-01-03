@@ -1,55 +1,83 @@
 <!doctype html>
 <html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Mini Quiz by James Byrne | Front End Developer in London</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-        <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Roboto+Mono:300,400" rel="stylesheet">
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-    </head>
-    <body>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Mini Quiz by James Byrne | Front End Developer in London</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Roboto+Mono:300,400" rel="stylesheet">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+
+<body>
     <div id="app-wrapper">
         <h2 id="subtitle">A coding project by <a href="http://jamestbyrne.com">James Byrne</a></h2>
         <h1 id="app-title">Mini Quiz</h1>
-        <div id ="wrapper">
-                <h2 id="question-number-background">01</h2>
-        <div class="question-answer-wrapper">
-        <h2 id="question"></h2>
-        <div id="answers">
-     <ul>
-       <li><button id="answer-one" class="answer unselected"></button>
-        <li><button id="answer-two" class="answer unselected"></button>
-        <li><button id="answer-three" class="answer unselected"></button>
-       <li> <button id="answer-four" class="answer unselected"></button>
-        </ul>  
-        <div id="btn-wrapper">
-        <button id="submit-answer" class="btn">Submit</button>
-        <button id="restart-quiz" class="btn no-show">Restart</button>
-        </div>
-        </div>    
+        <div id="wrapper">
+            <h2 id="question-number-background">01</h2>
+                                <div id="correct-answers-box" class="answer-box no-show">
+                                <h2 id="answers-title" class="no-show">Answers</h2>
+                        <ol id="answer-list">
+                        </ol>
+                    </div>
+            <div class="question-answer-wrapper">
+                <h2 id="question"></h2>
+                <div id="answers">
+                    <ul>
+                        <li>
+                        <button id="answer-one" class="answer unselected"></button>
+                        </li>
+                        <li>
+                        <button id="answer-two" class="answer unselected"></button>
+                        </li>
+                        <li>
+                        <button id="answer-three" class="answer unselected"></button>
+                        </li>
+                        <li>
+                        <button id="answer-four" class="answer unselected"></button>
+                        </li>
+                    </ul>
+                    <div id="btn-wrapper">
+                        <button id="submit-answer" class="btn">Submit</button>
+                        <button id="restart-quiz" class="btn no-show">Restart</button>
+
+                    </div>
+                </div>
+            </div>
 
         </div>
-        </div>
-</div>
-        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
-        <script src="js/quiz.js"></script>
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')
+    </script>
+    <script src="js/quiz.js"></script>
 
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='https://www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X','auto');ga('send','pageview');
-        </script>
-    </body>
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+        (function(b, o, i, l, e, r) {
+            b.GoogleAnalyticsObject = l;
+            b[l] || (b[l] =
+                function() {
+                    (b[l].q = b[l].q || []).push(arguments)
+                });
+            b[l].l = +new Date;
+            e = o.createElement(i);
+            r = o.getElementsByTagName(i)[0];
+            e.src = 'https://www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e, r)
+        }(window, document, 'script', 'ga'));
+        ga('create', 'UA-XXXXX-X', 'auto');
+        ga('send', 'pageview');
+    </script>
+</body>
+
 </html>

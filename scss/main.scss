@@ -3,6 +3,8 @@ $paleBlue: #dfeef3;
 $darkerGrey: #747474;
 $nearBlack: #212221;
 $offWhite: #fbfbf9;
+$burntRed: #de6868;
+$pastelGreen: #02B875;
 
 // CSS Reset
 
@@ -33,7 +35,7 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 }
-ol, ul {
+ul {
 	list-style: none;
 }
 blockquote, q {
@@ -176,8 +178,50 @@ body {
 			}
 		}
 }
+
+#correct-answers-box {
+		color: $darkerGrey;
+	width: 50%;
+	flex: 0 1 500px;
+	padding-top: 1.25rem;
+	font-family: 'roboto mono', helvetica, arial, sans-serif;
+	display: flex;
+	flex-direction: row;
+	ol { display: inline-block;
+		margin-left: 50px;
+		float: right;
+		width: 70%;
+		li {
+				margin: 0 0 1.75rem 0;
+		}
+	}
+}
+
+#answers-title {
+	transform: rotate(-90deg) translate(-200px, 0px);
+	display: inline-block;
+	font-size: 5rem;
+	font-weight: bold;
+	float: left;
+	height: 150px;
+	width: 100px;
+}
+.answers-question {
+
+}
+.right-answer {
+	color: $pastelGreen;
+	display: block;
+	margin-top: 0.25rem;
+}
+.wrong-answer {
+	color: $burntRed;
+	display: block;
+	line-height: 1.25rem;
+	margin-top: 0.25rem;
+}
 .no-show {
-	display: none;
+	display: none !important;
 }
 .selected {
 	border-bottom: solid 5px $paleBlue !important;
