@@ -3,8 +3,8 @@ $paleBlue: #dfeef3;
 $darkerGrey: #747474;
 $nearBlack: #212221;
 $offWhite: #fbfbf9;
-$burntRed: #de6868;
-$pastelGreen: #02B875;
+$burntRed: #FF6961;
+$pastelGreen: 	#77DD77;
 
 // CSS Reset
 
@@ -129,7 +129,7 @@ body {
 	font-family: 'poppins', helvetica, arial, sans-serif;
 	border: none;
 	cursor: pointer;
-	margin-top: 0.875rem;
+	margin-top: 0.75rem;
 	transition: 0.05s;
 	font-weight: 700;
 	font-size: 1.25rem;
@@ -140,6 +140,9 @@ body {
 	&:hover {
 		border-bottom: solid 5px $nearBlack;
 	}
+}
+#restart-quiz {
+	margin-top: 0px;
 }
 
 #question {
@@ -209,19 +212,28 @@ body {
 .answers-question {
 
 }
-.right-answer {
+.right-answer, .corrected-answer {
 	color: $pastelGreen;
 	display: block;
-	margin-top: 0.25rem;
+	margin-top: 0.5rem;
+}
+.right-answer:before {
+	content: "\2714";
+	margin-right: 0.5rem;
 }
 .wrong-answer {
 	color: $burntRed;
 	display: block;
 	line-height: 1.25rem;
-	margin-top: 0.25rem;
+	margin-top: 0.5rem;
+}
+.wrong-answer:before {
+	content: "\2716";
+	margin-right: 0.5rem;
 }
 .no-show {
 	display: none !important;
+	transition: 1s;
 }
 .selected {
 	border-bottom: solid 5px $paleBlue !important;

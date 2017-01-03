@@ -17,6 +17,7 @@ $(document).ready(function() {
     const backgroundQNum = document.getElementById('question-number-background');
     const answerBox = document.getElementById('correct-answers-box');
     const answerBoxTitle = document.getElementById('answers-title');
+    const answerList = document.getElementById('answer-list');    
     var allAnswers = [];
     // Declare list of questions
 
@@ -176,7 +177,7 @@ $(document).ready(function() {
             li.appendChild(answersWrongAns).textContent=(chosenAnswer);
             li.appendChild(answersCorrectedAns).textContent=(corrAnsw);
             answersQuest.classList.add('answers-question'); 
-            answersCorrectedAns.classList.add('right-answer');    
+            answersCorrectedAns.classList.add('corrected-answer');    
             answersWrongAns.classList.add('wrong-answer');        
         }
 
@@ -332,8 +333,6 @@ $(document).ready(function() {
         }
     }
 
-    // Check that at least one answer was selected
-
 
     // Default question
 
@@ -342,6 +341,8 @@ $(document).ready(function() {
     $("#answer-two").text(questions[i].answerTwo);
     $("#answer-three").text(questions[i].answerThree);
     $("#answer-four").text(questions[i].answerFour);
+
+      // Delete an item
 
     // Add event handler to submit button
 
@@ -358,6 +359,7 @@ $(document).ready(function() {
         nextQuestion();
         displayQuestion();
         questNumZero();
+        console.log(answerList.childNodes);
     });
 
     // Add event handler to restart button
@@ -380,8 +382,8 @@ $(document).ready(function() {
         answerFour.classList.remove('hidden');
         backgroundQNum.classList.remove('no-show');
         backgroundQNum.classList.textContent = ('01');
-        (submit).classList.remove("no-show");
-        (restart).classList.add("no-show");
+        submit.classList.remove("no-show");
+        restart.classList.add("no-show");
 
         answerOne.classList.remove('selected');
         answerTwo.classList.remove('selected');
@@ -391,13 +393,17 @@ $(document).ready(function() {
         answerTwo.classList.add('unselected');
         answerThree.classList.add('unselected');
         answerFour.classList.add('unselected');
+                
+       while (answerList.hasChildNodes())
+            answerList.removeChild(answerList.lastChild);
+
         answerBox.classList.add('no-show');
         answerBoxTitle.classList.add('no-show'); 
 
+
+
     });
 
-    $("#answers").removeClass("executed");
-    //$("#answers").toggleClass("after");
 
 
 
