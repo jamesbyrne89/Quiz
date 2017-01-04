@@ -14,11 +14,13 @@ $(document).ready(function() {
     const submit = document.getElementById('submit-answer');
     const restart = document.getElementById('restart-quiz');
 
-    const backgroundQNum = document.getElementById('question-number-background');
+    const backgroundQNum = document.getElementById('question-number-lg');
+    console.log(backgroundQNum.innerHTML);
     const answerBox = document.getElementById('correct-answers-box');
     const answerBoxTitle = document.getElementById('answers-title');
     const answerList = document.getElementById('answer-list');    
-    var allAnswers = [];
+
+
     // Declare list of questions
 
     const questions = new Array(
@@ -268,7 +270,9 @@ $(document).ready(function() {
     // Display the score
 
     function showScore() {
-                answerBox.classList.remove('no-show');
+        answerBox.classList.remove('no-show');
+        answerBox.classList.toggle('fade');
+        answerBoxTitle.classList.toggle('fade');
         answerBoxTitle.classList.remove('no-show'); 
         $("#question-number-background").text("");
         (questionText).textContent = ("Quiz completed!");
@@ -313,8 +317,6 @@ $(document).ready(function() {
             answerFour.classList.add('unselected');
              }, 500);   
         } else if (i == (questions.length)) {
-            showScore();
-
         }
     };
 
@@ -333,11 +335,7 @@ $(document).ready(function() {
 
 
         } else if (i == (questions.length)) {
-                    
-
                     showScore();
-                                answerBox.classList.toggle('fade');
-            answerBoxTitle.classList.toggle('fade');
         setTimeout(function(){ 
             answerBox.classList.toggle('fade');  
             answerBoxTitle.classList.toggle('fade');
@@ -351,9 +349,9 @@ $(document).ready(function() {
     // Change background question number
     function questNumZero() {
         if (i < 9) {
-            $("#question-number-background").text("0" + (i + 1));
+            backgroundQNum.textContent=("0" + (i + 1));
         } else {
-            $("#question-number-background").text((i + 1));
+            backgroundQNum.textContent=((i + 1));
         }
     }
 
@@ -373,25 +371,20 @@ $(document).ready(function() {
     submit.addEventListener('click', function() {
         checkAnswer();
         // Check that at least one answer has been selected
-        if ((answerOne).classList.contains('unselected') &&
-            (answerTwo).classList.contains('unselected') &&
-            (answerThree).classList.contains('unselected') &&
-            (answerFour).classList.contains('unselected')) {
+        if (answerOne.classList.contains('unselected') &&
+            answerTwo.classList.contains('unselected') &&
+            answerThree.classList.contains('unselected') &&
+            answerFour.classList.contains('unselected')) {
             alert('Please choose an answer first!');
             return;
         }
          
         nextQuestion();
-
-             setTimeout(function(){ 
+        setTimeout(function(){ 
         questNumZero();
         displayQuestion();
 
-         }, 500); 
-
-
-
-        
+         }, 500);    
     });
 
     // Add event handler to restart button

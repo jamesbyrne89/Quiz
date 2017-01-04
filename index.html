@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Mini Quiz by James Byrne | Front End Developer in London</title>
-    <meta name="description" content="">
+    <meta name="description" content='A short but difficult quiz using real questions from "Who Wants to Be a Millionaire?"'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -17,15 +17,13 @@
 </head>
 
 <body>
-    <div id="app-wrapper">
-        <h2 id="subtitle">A coding project by <a href="http://jamestbyrne.com">James Byrne</a></h2>
-        <h1 id="app-title">Mini Quiz</h1>
-        <div id="wrapper">
-            <h2 id="question-number-background">01</h2>
-                                <div id="correct-answers-box" class="answer-box no-show"><h2 id="answers-title" class="no-show">Answers</h2><ol id="answer-list"></ol></div>
-            <div id="question-answer-wrapper">
-                <h2 id="question"></h2>
-                <div id="answers">
+    <div class="app-wrapper">
+        <h2 class="subtitle">A coding project by <a href="http://jamestbyrne.com">James Byrne</a></h2>
+        <h1 class="app-title">Mini Quiz</h1>
+        <main class="content-wrapper">
+            <div id="question-answer-wrapper" class="question-answer-wrapper">
+                <h2 id="question" class="question"></h2>
+                <div id="answers" class="answers">
                     <ul>
                         <li>
                         <button id="answer-one" class="answer unselected"></button>
@@ -40,41 +38,21 @@
                         <button id="answer-four" class="answer unselected"></button>
                         </li>
                     </ul>
-                         </div>
-                    <div id="btn-wrapper">
+                </div>
+                    <div class="btn-wrapper">
                         <button id="submit-answer" class="btn">Submit</button>
                         <button id="restart-quiz" class="btn no-show">Restart</button>
-
-               
-                </div>
+                    </div>
             </div>
-
-        </div>
-    </div>
+            <h2 id="question-number-lg" class="question-number">01</h2>       
+         <div id="correct-answers-box" class="answer-box no-show"><h2 id="answers-title" class="answers-title no-show">Answers</h2><ol id="answer-list"></ol></div>
+    </main>
     </div>
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script>
         window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')
     </script>
     <script src="js/quiz.js"></script>
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <script>
-        (function(b, o, i, l, e, r) {
-            b.GoogleAnalyticsObject = l;
-            b[l] || (b[l] =
-                function() {
-                    (b[l].q = b[l].q || []).push(arguments)
-                });
-            b[l].l = +new Date;
-            e = o.createElement(i);
-            r = o.getElementsByTagName(i)[0];
-            e.src = 'https://www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e, r)
-        }(window, document, 'script', 'ga'));
-        ga('create', 'UA-XXXXX-X', 'auto');
-        ga('send', 'pageview');
-    </script>
 </body>
 
 </html>
