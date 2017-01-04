@@ -349,9 +349,9 @@ $(document).ready(function() {
     // Change background question number
     function questNumZero() {
         if (i < 9) {
-            backgroundQNum.textContent=("0" + (i + 1));
+            backgroundQNum.innerHTML=("0" + (i + 1) + "<span>/10</span>");
         } else {
-            backgroundQNum.textContent=((i + 1));
+            backgroundQNum.innerHTML=((i + 1) + "<span>/10</span>");
         }
     }
 

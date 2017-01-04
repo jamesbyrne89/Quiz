@@ -132,6 +132,11 @@ body {
 	width: 50%;
 	color: $darkerGrey;
 	flex: 0 1 500px;
+	span {
+		font-size: 5rem;
+		vertical-align: baseline;
+		padding-bottom: 0.5rem;
+	}
 }
 
 /* === QUESTION AND ANSWER BOX === */
@@ -294,61 +299,61 @@ body {
 }
 
 @media (max-width: 900px) {
-	#question-number-background {
+	.question-number-background {
 		font-size: 400px;
 		line-height: 400px;
 	}
-	#wrapper {
+	.wrapper {
 		margin: 50px 0px;
 	}
 }
 @media (max-width: 600px) {
-	#question-number-background {
+	.question-number-background {
 		font-size: 300px;
 		line-height: 300px;
 	}
-	#wrapper {
+	.wrapper {
 		margin: 50px 0px;
 	}
-	#app-title {
+	.app-title {
 		font-size: 4.5rem;
 	}
-	#correct-answers-box {
+	.correct-answers-box {
 		order: 1;
 	}
 }
 @media (max-width: 400px) {
-	#question-number-background {
+	.question-number-background {
 		font-size: 100px;
 		line-height: 80px;
 	}
-	#wrapper {
+	.wrapper {
 		margin: 20px 0px;
 	}
-	#app-title {
+	.app-title {
 		font-size: 3rem;
 		padding-top: 0.5rem;
 	}
-	#subtitle {
+	.subtitle {
 		font-size: 0.75rem;
 		padding-bottom: 0.5rem;
 	}
-	#question {
+	.question {
 		padding-bottom: 0;
 	}
-	#answers ul li {
+	.answers ul li {
 		padding: 0.25rem 0px;
 	}
 	.btn {
 		margin-top: 0;
 	}
-	#answers-title {
+	.answers-title {
 		transform: rotate(0deg);
 		font-size: 3rem;
 		height: 50px;
 		margin: 1.75rem 0;
 	}
-	#correct-answers-box ol {
+	.correct-answers-box ol {
 		font-size: 0.75rem;
 		margin-left: 20px;
 	}
