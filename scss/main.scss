@@ -94,10 +94,11 @@ body {
 	width: 100%;
 		display: block;
 		display: flex;
+
 		flex-grow: 0;
 		flex-wrap: wrap;
 	justify-content: space-between;
-	align-content: center;
+	align-content: flex-end;
 
 }
 
@@ -117,7 +118,6 @@ body {
 	flex: 0 1 500px;
 	padding-top: 1.25rem;
 	font-family: 'roboto mono', helvetica, arial, sans-serif;
-	position: relative;
 }
 
 #btn-wrapper{
@@ -189,25 +189,39 @@ body {
 
  .executed {
     opacity:1;
+    display: block;
     right: 0;
-    -webkit-transition: all 0.2s ;
-      -moz-transition: all 0.2s ;
-      -o-transition: all 0.2s ;
-      transition: all 0.2s ;
+    -webkit-transition: all 2s ease-in-out;
+      -moz-transition: all 2s ease-in-out;
+      -o-transition: all 2s ease-in-out;
+      transition: all 2s ease-in-out;
   }
 
-    .reset {
+    .slide-right {
     position: absolute;
     opacity:0 !important;
-    right:-600px !important;
-    -webkit-transition: all 0.75s ease-out;
-      -moz-transition: all 0.75s ease-out;
-      -o-transition: all 0.75s ease-out;
-      transition: all 0.75s ease-out;
+    right:-300px !important;
+    -webkit-transition: all 2s ease-in-out;
+      -moz-transition: all 2s ease-in-out;
+      -o-transition: all 2s ease-in-out;
+      transition: all 2s ease-in-out;
+  }
+      .slide-left {
+    position: absolute;
+    opacity:0 !important;
+    right:-300px !important;
+    -webkit-transition: all 2s ease-in-out;
+      -moz-transition: all 2s ease-in-out;
+      -o-transition: all 2s ease-in-out;
+      transition: all 2s ease-in-out;
   }
 
    .fade {
     opacity:0 !important;
+    -webkit-transition: all 0.2s ease-in-out;
+      -moz-transition: all 0.2s ease-in-out;
+      -o-transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;    
   }
 
 #correct-answers-box {
@@ -218,6 +232,11 @@ body {
 	font-family: 'roboto mono', helvetica, arial, sans-serif;
 	display: flex;
 	flex-direction: row;
+	opacity: 1;
+	    -webkit-transition: all 0.5s ease-in-out;
+      -moz-transition: all 0.5s ease-in-out;
+      -o-transition: all 0.5s ease-in-out;
+      transition: all 0.5s ease-in-out;	
 	ol { display: inline-block;
 		margin-left: 50px;
 		float: right;
@@ -261,7 +280,10 @@ body {
 }
 .no-show {
 	display: none !important;
-	transition: 1s;
+    -webkit-transition: all 2s ease-in-out;
+      -moz-transition: all 2s ease-in-out;
+      -o-transition: all 2s ease-in-out;
+      transition: all 2s ease-in-out;
 }
 .selected {
 	border-bottom: solid 5px $paleBlue !important;

@@ -11,7 +11,6 @@ $(document).ready(function() {
     const answerTwo = document.getElementById('answer-two');
     const answerThree = document.getElementById('answer-three');
     const answerFour = document.getElementById('answer-four');
-
     const submit = document.getElementById('submit-answer');
     const restart = document.getElementById('restart-quiz');
 
@@ -269,6 +268,8 @@ $(document).ready(function() {
     // Display the score
 
     function showScore() {
+                answerBox.classList.remove('no-show');
+        answerBoxTitle.classList.remove('no-show'); 
         $("#question-number-background").text("");
         (questionText).textContent = ("Quiz completed!");
         (answerOne).textContent = ("You scored: " + score + "/10");
@@ -280,11 +281,9 @@ $(document).ready(function() {
         answerTwo.classList.remove('answer');
         answerThree.classList.add('hidden');
         answerFour.classList.add('hidden');
-        (submit).classList.add("no-show");
-        (restart).classList.remove("no-show");
+        submit.classList.add("no-show");
+        restart.classList.remove("no-show");
         backgroundQNum.classList.add('no-show');
-        answerBox.classList.remove('no-show');
-        answerBoxTitle.classList.remove('no-show'); 
 
     };
 
@@ -297,16 +296,12 @@ $(document).ready(function() {
     function nextQuestion() {
         if (i < (questions.length)) {
             i++; // increase i by one
-                    questionAnswers.classList.add('reset');  
-            questionAnswers.classList.remove('executed');
-            questionAnswers.classList.add('reset');
-            questionAnswers.classList.remove('executed');
+            questionAnswers.classList.toggle("fade");
             questionText.classList.toggle("fade");
+            submit.classList.toggle("fade");
         setTimeout(function(){ 
-            questionAnswers.classList.remove('reset');  
-            questionAnswers.classList.add('executed');
-            questionAnswers.classList.remove('reset');
-            questionAnswers.classList.add('executed'); 
+            questionAnswers.classList.toggle("fade");  
+            submit.classList.toggle("fade");
             questionText.classList.toggle("fade");
             answerOne.classList.remove('selected');
             answerTwo.classList.remove('selected');
@@ -316,10 +311,10 @@ $(document).ready(function() {
             answerTwo.classList.add('unselected');
             answerThree.classList.add('unselected');
             answerFour.classList.add('unselected');
-            console.log('triggered');
-             }, 1000);   
+             }, 500);   
         } else if (i == (questions.length)) {
             showScore();
+
         }
     };
 
@@ -338,9 +333,19 @@ $(document).ready(function() {
 
 
         } else if (i == (questions.length)) {
-                    questionAnswers.classList.remove('executed'); 
-            showScore();
+                    
+
+                    showScore();
+                                answerBox.classList.toggle('fade');
+            answerBoxTitle.classList.toggle('fade');
+        setTimeout(function(){ 
+            answerBox.classList.toggle('fade');  
+            answerBoxTitle.classList.toggle('fade');
+
+
+             }, 500);  
         }
+
     }
 
     // Change background question number
@@ -377,8 +382,13 @@ $(document).ready(function() {
         }
          
         nextQuestion();
-        displayQuestion();
+
+             setTimeout(function(){ 
         questNumZero();
+        displayQuestion();
+
+         }, 500); 
+
 
 
         
