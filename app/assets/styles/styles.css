@@ -55,7 +55,7 @@ body {
 /* === SHOW/HIDE ELEMENTS === */
 
 .no-show {
-	display: none !important;
+	display: none;
 	-webkit-transition: all 2s ease-in-out;
 	-moz-transition: all 2s ease-in-out;
 	-o-transition: all 2s ease-in-out;
@@ -108,7 +108,7 @@ body {
 /* === SHOW/HIDE ELEMENTS === */
 
 .no-show {
-	display: none !important;
+	display: none;
 	-webkit-transition: all 2s ease-in-out;
 	-moz-transition: all 2s ease-in-out;
 	-o-transition: all 2s ease-in-out;
@@ -124,20 +124,31 @@ body {
 
 /* === LARGE QUESTION NUMBER === */
 
-.question-number {
+.question-number-wrapper {
 	font-size: 440px;
 	line-height: 400px;
 	font-weight: bold;
 	margin: 0;
 	width: 50%;
+	letter-spacing: -10px;
 	color: $darkerGrey;
-	flex: 0 1 500px;
-	span {
+	overflow: hidden;
+	display: flex;
+	flex: 0 1 750px;
+	justify-content: space-between;
+}
+
+	.question-number--small {
 		font-size: 5rem;
 		vertical-align: baseline;
 		padding-bottom: 0.5rem;
+		letter-spacing: normal;
+		margin-left: 40px;
 	}
-}
+
+#first-digit, #second-digit {
+	display: inline-block;
+}	
 
 /* === QUESTION AND ANSWER BOX === */
 
@@ -150,8 +161,9 @@ body {
 }
 
 .question {
+	position: relative;
 	margin: 0;
-	margin-left: 40px;
+	left: 40px;
 	padding: 0rem 0rem 0.675rem 0rem;
 	font-size: 1.25rem;
 	min-height: 80px;
@@ -163,11 +175,17 @@ body {
 	transition: all 0.5s ease-in-out;
 }
 
+.answer {
+			opacity: 0;
+}
+
 .answers {
 	ul {
 		list-style: none;
+		position: relative;
 		padding: 0;
 		margin-top: 1.25rem;
+		left: 60px;
 		margin-bottom: 1.25rem;
 		min-height: 200px;
 		li {
@@ -210,7 +228,7 @@ body {
 	font-weight: 700;
 	font-size: 1.25rem;
 	margin-left: 0px;
-	margin-bottom: -5px;
+	transform: translateY(-5);
 	opacity: 0;
 	&:before {
 		content: "-";
@@ -243,10 +261,10 @@ body {
 	flex: 0 1 500px;
 	padding-top: 1.25rem;
 	font-family: 'roboto mono', helvetica, arial, sans-serif;
-	display: flex;
+	display: none;
 	flex-direction: row;
 	flex-wrap: wrap;
-	opacity: 1;
+	opacity: 0;
 	-webkit-transition: all 0.5s ease-in-out;
 	-moz-transition: all 0.5s ease-in-out;
 	-o-transition: all 0.5s ease-in-out;

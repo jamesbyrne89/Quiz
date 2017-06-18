@@ -39,7 +39,7 @@ body {
 }
 /* === SHOW/HIDE ELEMENTS === */
 .no-show {
-	display: none !important;
+	display: none;
 	transition: all 2s ease-in-out;
 }
 .selected {
@@ -93,7 +93,7 @@ body {
 }
 /* === SHOW/HIDE ELEMENTS === */
 .no-show {
-	display: none !important;
+	display: none;
 	transition: all 2s ease-in-out;
 }
 .selected {
@@ -104,21 +104,34 @@ body {
 	visibility: hidden !important;
 }
 /* === LARGE QUESTION NUMBER === */
-.question-number {
+.question-number-wrapper {
 	font-size: 440px;
 	line-height: 400px;
 	font-weight: bold;
 	margin: 0;
 	width: 50%;
+	letter-spacing: -10px;
 	color: #747474;
+	overflow: hidden;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
 	-webkit-box-flex: 0;
-	    -ms-flex: 0 1 500px;
-	        flex: 0 1 500px;
+	    -ms-flex: 0 1 750px;
+	        flex: 0 1 750px;
+	-webkit-box-pack: justify;
+	    -ms-flex-pack: justify;
+	        justify-content: space-between;
 }
-.question-number span {
-	font-size: 5rem;
-	vertical-align: baseline;
-	padding-bottom: 0.5rem;
+.question-number--small {
+		font-size: 5rem;
+		vertical-align: baseline;
+		padding-bottom: 0.5rem;
+		letter-spacing: normal;
+		margin-left: 40px;
+	}
+#first-digit, #second-digit {
+	display: inline-block;
 }
 /* === QUESTION AND ANSWER BOX === */
 .question-answer-wrapper {
@@ -131,8 +144,9 @@ body {
 	font-family: 'roboto mono', helvetica, arial, sans-serif;
 }
 .question {
+	position: relative;
 	margin: 0;
-	margin-left: 40px;
+	left: 40px;
 	padding: 0rem 0rem 0.675rem 0rem;
 	font-size: 1.25rem;
 	min-height: 80px;
@@ -140,10 +154,15 @@ body {
 	opacity: 0;
 	transition: all 0.5s ease-in-out;
 }
+.answer {
+			opacity: 0;
+}
 .answers ul {
 	list-style: none;
+	position: relative;
 	padding: 0;
 	margin-top: 1.25rem;
+	left: 60px;
 	margin-bottom: 1.25rem;
 	min-height: 200px;
 }
@@ -185,7 +204,8 @@ body {
 	font-weight: 700;
 	font-size: 1.25rem;
 	margin-left: 0px;
-	margin-bottom: -5px;
+	-webkit-transform: translateY(-5);
+	        transform: translateY(-5);
 	opacity: 0;
 }
 .btn:before {
@@ -212,16 +232,14 @@ body {
 	        flex: 0 1 500px;
 	padding-top: 1.25rem;
 	font-family: 'roboto mono', helvetica, arial, sans-serif;
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
+	display: none;
 	-webkit-box-orient: horizontal;
 	-webkit-box-direction: normal;
 	    -ms-flex-direction: row;
 	        flex-direction: row;
 	-ms-flex-wrap: wrap;
 	    flex-wrap: wrap;
-	opacity: 1;
+	opacity: 0;
 	transition: all 0.5s ease-in-out;
 }
 #correct-answers-box ol {
