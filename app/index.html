@@ -9,11 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Roboto+Mono:300,400" rel="stylesheet">
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/main.css">
-    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+     
+    <!-- build:css assets/styles/styles.css -->
+    <link rel="stylesheet" href="temp/assets/styles/styles.css"><!-- endBuild -->
 </head>
 
 <body>
@@ -24,7 +24,7 @@
             <div id="question-answer-wrapper" class="question-answer-wrapper">
                 <h2 id="question" class="question"></h2>
                 <div id="answers" class="answers">
-                    <ul>
+                    <ul id ="answers-inner">
                         <li>
                         <button id="answer-one" class="answer unselected"></button>
                         </li>
@@ -45,14 +45,15 @@
                     </div>
             </div>
             <h2 id="question-number-lg" class="question-number">01<span>/10</span></h2>       
-         <div id="correct-answers-box" class="answer-box no-show"><h2 id="answers-title" class="answers-title no-show">Answers</h2><ol id="answer-list"></ol></div>
+         <div id="correct-answers-box" class="answer-box no-show"><h2 id="answers-title" class="answers-title">Answers</h2><ol id="answer-list"></ol></div>
     </main>
     </div>
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script>
         window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')
     </script>
-    <script src="js/quiz.js"></script>
+    <!-- build:js assets/scripts/app.js -->   
+    <script src="assets/scripts/babel/app.js"></script><!-- endBuild -->
 </body>
 
 </html>

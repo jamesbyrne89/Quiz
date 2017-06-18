@@ -87,11 +87,11 @@ gulp.task('cssInject', ['compilecss'], function(){
 // 		});
 // 	});
 
-watch('app/assets/scripts/**/*.js', function(){
+watch('app/assets/scripts/app.js', function(){
   browserSync.reload();
 });
 
-watch('app/assets/scripts/**/*.js', function(){
+watch('app/assets/scripts/app.js', function(){
   gulp.start('babel');
 });
 
