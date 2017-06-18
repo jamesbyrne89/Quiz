@@ -133,8 +133,11 @@ body {
 	letter-spacing: -10px;
 	color: $darkerGrey;
 	overflow: hidden;
-	display: flex;
+	display: none;
+	position: relative;
+	top: 40px;
 	flex: 0 1 750px;
+	opacity: 0;
 	justify-content: space-between;
 }
 
@@ -288,6 +291,9 @@ body {
 	float: left;
 	height: 150px;
 	width: 100px;
+	position: relative;
+	top: 400px;
+	opacity: 0;
 }
 
 .answers-list__answer--correct, .corrected-answer {
@@ -316,6 +322,8 @@ body {
 	border-bottom: solid 5px $paleBlue !important;
 	font-size: 1.75rem !important;
 	margin-bottom: calc(150px + 1.25rem) !important;
+	position: relative;
+	left: 40px;
 }
 .score:hover {
 	background: none!important;

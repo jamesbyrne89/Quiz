@@ -157,21 +157,17 @@ views.questions = (function showQuestionView() {
 			for (var i = 0; i < _elems.answerBoxes.length; i++) {
 				_elems.answerBoxes[i].innerText = currentQuestion.answers[i]
 			}
-			_animateIn();
+			//_animateIn();
 		}, 1000);
 	};
 
 	const _setQuestionNumber = function _setQuestionNumber(num) {
 
 
-		_elems.backgroundQNumWrapper.style.display = 'flex';
-
-
-
 		if (num < 9) {
 			_elems.backgroundQNumFirstDigit.textContent = 0;
 			_elems.backgroundQNumSecondDigit.textContent = num + 1;
-			
+
 		} else if (num === 9) {
 			_elems.backgroundQNumFirstDigit.textContent = 1;
 			_elems.backgroundQNumSecondDigit.textContent = 0;
@@ -181,6 +177,7 @@ views.questions = (function showQuestionView() {
 	};
 
 	const _animateIn = function _animateIn() {
+		console.log('Animating in')
 		let question = _elems.questionHolder;
 		// Animate question
 		TweenLite.to(question, 0.4, {
@@ -195,7 +192,7 @@ views.questions = (function showQuestionView() {
 			ease: Circ.easeIn
 		});
 		// Loop through answer boxes and set delay 
-		let delay = 1.2;
+		let delay = 0.8;
 		for (var i = 0; i < _elems.answerBoxes.length; i++) {
 			delay += 0.1;
 			TweenLite.to(_elems.answerBoxes[i], 0.3, {
@@ -210,8 +207,9 @@ views.questions = (function showQuestionView() {
 	}
 
 	const _animateOut = function _animateOut() {
+		console.log('Animating out')
 		let question = _elems.questionHolder;
-		TweenLite.to(question, 0.4, {
+		TweenLite.to(question, 0.3, {
 			opacity: 0,
 			x: 40,
 			ease: Power2.easeInOut
@@ -223,7 +221,7 @@ views.questions = (function showQuestionView() {
 			ease: Power2.easeInOut
 		});
 		// Loop through answer boxes and set delay 
-		let delay = 0.9;
+		let delay = 0.5;
 		for (var i = 0; i < _elems.answerBoxes.length; i++) {
 			delay -= 0.1;
 			TweenLite.to(_elems.answerBoxes[i], 0.3, {
@@ -236,7 +234,7 @@ views.questions = (function showQuestionView() {
 
 		let tl = new TimelineLite();
 
-		tl.to(_elems.backgroundQNumSecondDigit, 0.5, {
+		tl.to(_elems.backgroundQNumSecondDigit, 0.4, {
 			y: -360,
 			delay: 0.5,
 			ease: Power4.easeOut
@@ -247,25 +245,22 @@ views.questions = (function showQuestionView() {
 			y: 0,
 			ease: Power4.easeOut
 		});
-		console.log('questions length', model.getQuestions.indexOf(model.getCurrentQuestion()))
 
 		if (model.getQuestions.indexOf(model.getCurrentQuestion()) === 9) {
-			console.log('first')
 			let tl = new TimelineLite();
 
-		tl.to(_elems.backgroundQNumFirstDigit, 0.5, {
-			y: -360,
-			delay: 0.2,
-			ease: Power4.easeOut
-		}).to(_elems.backgroundQNumFirstDigit, 0, {
-			y: 360,
-			ease: Power4.easeOut
-		}).to(_elems.backgroundQNumFirstDigit, 0.5, {
-			y: 0,
-			ease: Power4.easeOut
-		});
+			tl.to(_elems.backgroundQNumFirstDigit, 0.4, {
+				y: -360,
+				delay: 0.3,
+				ease: Power4.easeOut
+			}).to(_elems.backgroundQNumFirstDigit, 0, {
+				y: 360,
+				ease: Power4.easeOut
+			}).to(_elems.backgroundQNumFirstDigit, 0.5, {
+				y: 0,
+				ease: Power4.easeOut
+			});
 		}
-
 
 
 
@@ -295,6 +290,7 @@ views.finished = (function showFinishedView() {
 		correctAnswersContainer: document.getElementById('correct-answers-box'),
 		scoreHolder: document.createElement('span'),
 		answersInner: document.getElementById('answers-inner'),
+		answersTitle: document.getElementById('answers-title'),
 		restart: document.getElementById('restart-quiz')
 	};
 
@@ -328,6 +324,7 @@ views.finished = (function showFinishedView() {
 
 	const _showFinalScore = function _showFinalScore() {
 
+
 		_elems.answersInner.classList.add('no-show');
 
 		views.questions.element('answerContainer').appendChild(_elems.scoreHolder);
@@ -336,10 +333,64 @@ views.finished = (function showFinishedView() {
 		_elems.scoreHolder.textContent = ("You scored: " + model.getScore() + "/10");
 		_elems.scoreHolder.classList.add('score');
 
-		views.questions.element('submit').classList.add("no-show");
+		views.questions.animate;
 		_elems.restart.classList.remove("no-show");
 
 	};
+
+	const _animateIn = function _animateIn() {
+		let tl = new TimelineLite();
+		let tl2 = new TimelineLite();
+		let tl3 = new TimelineLite();
+
+		tl2.to(views.questions.element('backgroundQNumWrapper'), 0.4, {
+			opacity: 0,
+			x: 100,
+			ease: Power2.easeInOut
+		}).to(views.questions.element('backgroundQNumWrapper'), 0.4, {
+			display: 'none',
+			ease: Power2.easeInOut
+		});
+		TweenLite.to(views.questions.element('questionHolder'), 0.5, {
+			opacity: 1,
+			ease: Power2.easeInOut
+		});
+
+		TweenLite.to(_elems.scoreHolder, 0.4, {
+			opacity: 1,
+			x: -40,
+			ease: Power2.easeInOut
+		});
+		tl.to(views.questions.element('submit'), 0.4, {
+			opacity: 0,
+			y: 15,
+			delay: 0,
+			ease: Power2.easeInOut
+		}).to(views.questions.element('submit'), 0, {
+			display: 'none',
+			ease: Power2.easeInOut
+		});
+		TweenLite.to(_elems.restart, 0.5, {
+			opacity: 1,
+			y: -15,
+			delay: 0.7,
+			ease: Power2.easeInOut
+		});
+			tl3.to(_elems.answersTitle, 0, {
+			rotation: -90, 
+		}).to(_elems.answersTitle, 0.5, {
+			opacity: 1,
+			y: -200,
+			delay: 2.5,
+			ease: Power2.easeInOut
+		});
+		TweenLite.to(_elems.correctAnswersContainer, 0.5, {
+			display: 'flex',
+			opacity: 1,
+			delay: 2,
+			ease: Power2.easeInOut
+		});
+	}
 
 	const _resetView = function _resetView() {
 		_elems.answersInner.classList.remove('no-show');
@@ -353,6 +404,7 @@ views.finished = (function showFinishedView() {
 		showFinalScore: _showFinalScore,
 		displayAnswers: _displayAnswers,
 		resetView: _resetView,
+		animateIn: _animateIn,
 		element: function(el) {
 			return _elems[el];
 		}
@@ -390,26 +442,32 @@ views.start = (function start() {
 
 	const _animateOut = function _animateOut() {
 		let welcomeMessage = views.questions.element('questionHolder');
+		let tl = new TimelineLite();
+
 		TweenLite.to(welcomeMessage, 0.5, {
 			opacity: 0,
 			x: 60,
 			ease: Circ.easeIn
 		});
-		TweenLite.to(_elems.startQuiz, 0.5, {
+		TweenLite.to(_elems.startQuiz, 0.3, {
 			opacity: 0,
 			y: 15,
-			x: 0,
 			delay: 0.5
+		});
+		tl.to(views.questions.element('backgroundQNumWrapper'), 0, {
+			display: 'flex',
+			delay: 0.5
+		}).to(views.questions.element('backgroundQNumWrapper'), 0.1, {
+			y: -40,
+			opacity: 1,
+			ease: Circ.easeInOut
 		});
 	}
 
 	return {
 		display: function() {
 			_showWelcomeMessage();
-
 			_animateIn();
-
-
 		},
 		element: function(el) {
 			return _elems[el];
@@ -464,9 +522,7 @@ const controller = (function controller() {
 		views.start.element('startQuiz').addEventListener('click', function() {
 			_handleNextQuestion();
 			this.style.display = 'none';
-			console.log(views.questions.element('submit').style.display)
 			views.questions.element('submit').style.display = 'block';
-			console.log(views.questions.element('submit').style.display)
 			setTimeout(function() {
 				views.questions.animateIn();
 			}, 1000);
@@ -481,12 +537,13 @@ const controller = (function controller() {
 		} else {
 			views.questions.displayQuestions(currentQuestion);
 			setTimeout(function() {
-			views.questions.setQuestionNumber(model.getQuestions.indexOf(currentQuestion));
-		}, 500);
+				views.questions.setQuestionNumber(model.getQuestions.indexOf(currentQuestion));
+			}, 500);
 		}
 	};
 
 	const _handleFinished = function _handleFinished() {
+		views.finished.animateIn();
 		views.finished.displayAnswers();
 		views.finished.showFinalScore();
 
@@ -517,13 +574,13 @@ const controller = (function controller() {
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			} else if (question.index === 1 && chosenAnswer !== question.answers[0]) {
 				model.getCurrentQuestion().correctAnswer = question.answers[0];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			}
 			// Answer 2
 			else if (question.index === 2 && chosenAnswer === question.answers[0]) {
@@ -532,13 +589,13 @@ const controller = (function controller() {
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			} else if (question.index === 2 && chosenAnswer !== question.answers[0]) {
 				model.getCurrentQuestion().correctAnswer = question.answers[0];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			}
 			// Answer 3
 			else if (question.index === 3 && chosenAnswer === question.answers[0]) {
@@ -548,13 +605,13 @@ const controller = (function controller() {
 
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			} else if (question.index === 3 && chosenAnswer !== question.answers[0]) {
 				model.getCurrentQuestion().correctAnswer = question.answers[0];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			}
 			// Answer 4
 			else if (question.index === 4 && chosenAnswer === question.answers[0]) {
@@ -563,13 +620,13 @@ const controller = (function controller() {
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			} else if (question.index === 4 && chosenAnswer !== question.answers[0]) {
 				model.getCurrentQuestion().correctAnswer = question.answers[0];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			}
 			// Answer 5
 			else if (question.index === 5 && chosenAnswer === question.answers[0]) {
@@ -578,13 +635,13 @@ const controller = (function controller() {
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			} else if (question.index === 5 && chosenAnswer !== question.answers[0]) {
 				model.getCurrentQuestion().correctAnswer = question.answers[0];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			}
 			// Answer 6
 			else if (question.index === 6 && chosenAnswer === question.answers[0]) {
@@ -593,13 +650,13 @@ const controller = (function controller() {
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			} else if (question.index === 6 && chosenAnswer !== question.answers[0]) {
 				model.getCurrentQuestion().correctAnswer = question.answers[0];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			}
 			// Answer 7
 			else if (question.index === 7 && chosenAnswer === question.answers[0]) {
@@ -608,13 +665,13 @@ const controller = (function controller() {
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			} else if (question.index === 7 && chosenAnswer !== question.answers[0]) {
 				model.getCurrentQuestion().correctAnswer = question.answers[0];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			}
 			// Answer 8
 			else if (question.index === 8 && chosenAnswer === question.answers[0]) {
@@ -623,13 +680,13 @@ const controller = (function controller() {
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			} else if (question.index === 8 && chosenAnswer !== question.answers[0]) {
 				model.getCurrentQuestion().correctAnswer = question.answers[0];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			}
 			// Answer 9
 			else if (question.index === 9 && chosenAnswer === question.answers[0]) {
@@ -638,13 +695,13 @@ const controller = (function controller() {
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			} else if (question.index === 9 && chosenAnswer !== question.answers[0]) {
 				model.getCurrentQuestion().correctAnswer = question.answers[0];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			}
 			// Answer 10
 			else if (question.index === 10 && chosenAnswer === question.answers[0]) {
@@ -653,13 +710,13 @@ const controller = (function controller() {
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			} else if (question.index === 10 && chosenAnswer !== question.answers[0]) {
 				model.getCurrentQuestion().correctAnswer = question.answers[0];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
-				}, 700);
+				}, 750);
 			} else {
 				return;
 			}
