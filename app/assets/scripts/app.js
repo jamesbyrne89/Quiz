@@ -1,5 +1,9 @@
 // Declare variables
 
+const views = (function setupViews() {
+	let viewsObj = {};
+	return viewsObj;
+})();
 
 const model = (function model() {
 
@@ -94,6 +98,7 @@ const model = (function model() {
 
 	// Increase the user's score by one
 	const _increaseScore = function _increaseScore() {
+		console.log(_score)
 		_score++;
 	}
 
@@ -101,7 +106,6 @@ const model = (function model() {
 	const _nextQuestion = function _nextQuestion() {
 		_currentQuestionNumber++;
 		if (questions[_currentQuestionNumber - 1]) {
-			console.log(questions[_currentQuestionNumber - 1])
 			return questions[_currentQuestionNumber - 1];
 		} else {
 			_currentQuestionNumber = 0;
@@ -126,114 +130,223 @@ const model = (function model() {
 
 
 // Place next question into HTML
+// 
 
-const view = (function view() {
 
 
-	const answerBox = document.getElementById('answers');
-	const answerBoxes = document.getElementsByClassName('answer');
-	const questionHolder = document.getElementById('question');
-	const restart = document.getElementById('restart-quiz');
-	const submit = document.getElementById('submit-answer');
-	const correctAnswersBox = document.getElementById('correct-answers-box');
+views.questions = (function showQuestionView() {
 
-		const score = document.createElement('span');	
+	// Question view elements
+	// 
+	let _elems = {
+		answerContainer: document.getElementById('answers'),
+		answerBoxes: document.getElementsByClassName('answer'),
+		questionHolder: document.getElementById('question'),
+		submit: document.getElementById('submit-answer'),
+		backgroundQNum: document.getElementById('question-number-lg'),
+		answerOptions: document.getElementsByClassName('answer')
+	};
 
-			const answersInner = document.getElementById('answers-inner');
+	const _displayQuestions = function _displayQuestions(currentQuestion) {
 
-	const questionView = function questionView(currentQuestion) {
-
-		questionHolder.innerText = currentQuestion.question;
-		for (var i = 0; i < answerBoxes.length; i++) {
-			answerBoxes[i].innerText = currentQuestion.answers[i]
+		_elems.questionHolder.innerText = currentQuestion.question;
+		for (var i = 0; i < _elems.answerBoxes.length; i++) {
+			_elems.answerBoxes[i].innerText = currentQuestion.answers[i]
 		}
-	}
+	};
 
 	const _setQuestionNumber = function _setQuestionNumber(num) {
-		const backgroundQNum = document.getElementById('question-number-lg');
-		backgroundQNum.style.display = 'block';
+		_elems.backgroundQNum.classList.remove('no-show');
 		if (num < 9) {
-			backgroundQNum.innerHTML = ("0" + (num + 1) + "<span>/10</span>");
+			_elems.backgroundQNum.innerHTML = ("0" + (num + 1) + "<span>/10</span>");
 		} else if (num === 9) {
-			backgroundQNum.innerHTML = ((num + 1) + "<span>/10</span>");
+			_elems.backgroundQNum.innerHTML = ((num + 1) + "<span>/10</span>");
 		} else if (!num) {
-			backgroundQNum.style.display = 'none';
+			_elems.backgroundQNum.classList.add('no-show');
 		}
+	};
+
+	const _animateIn = function _animateIn() {
+		console.log('animating in questions')
+		let question = _elems.questionHolder;
+		TweenLite.to(question, 0.5, {
+			opacity: 1,
+			x: -40,
+			ease: Circ.easeIn
+		});
+		TweenLite.to(_elems.submit, 0.5, {
+			opacity: 1,
+			y: -15,
+			ease: Circ.easeIn
+		});
+	}
+
+	const _animateOut = function _animateOut() {
+		let question = _elems.questionHolder;
+		TweenLite.to(question, 0.5, {
+			opacity: 0,
+			x: 40,
+			ease: Circ.easeIn
+		});
+	}
+
+	return {
+		displayQuestions: _displayQuestions,
+		setQuestionNumber: _setQuestionNumber,
+		animateIn: _animateIn,
+		animateOut: _animateOut,
+		element: function(el) {
+			return _elems[el];
+		}
+	};
+
+})();
+
+
+views.finished = (function showFinishedView() {
+
+	// Finished view elements
+	let _elems = {
+		questionAnswers: document.getElementById('answers'),
+		questAnsWrapper: document.getElementById('question-answer-wrapper'),
+		answerList: document.getElementById('answer-list'),
+		finalAnswersList: document.getElementById("answer-list"),
+		correctAnswersContainer: document.getElementById('correct-answers-box'),
+		scoreHolder: document.createElement('span'),
+		answersInner: document.getElementById('answers-inner'),
+		restart: document.getElementById('restart-quiz')
 	};
 
 
 
 	const _displayAnswers = function _displayAnswers() {
+
 		// Build list of correct answers
-		const questionAnswers = document.getElementById('answers');
-		const questAnsWrapper = document.getElementById('question-answer-wrapper');
-		const answerList = document.getElementById('answer-list');
-		var finalAnswersList = document.getElementById("answer-list");
-		var frag = document.createDocumentFragment();
-		var wrongAnswer = '';
+		views.questions.element('backgroundQNum').classList.add('no-show');
 
-		correctAnswersBox.classList.remove('no-show');
-
+		_elems.correctAnswersContainer.classList.remove('no-show');
+		let frag = document.createDocumentFragment();
+		// Loop through given and correct answers and add to DOM
 		for (let i = 0; i < model.getQuestions.length; i++) {
 
 			var li = document.createElement('li');
+			let wrongAnswer = '';
+
 
 			if (model.getQuestions[i].userAnswer !== model.getQuestions[i].correctAnswer) {
 				wrongAnswer = `<span class="answers-list__answer--incorrect">${model.getQuestions[i].userAnswer}</span>`;
 			}
+
 			li.innerHTML = `<span class="answers-list__question">${model.getQuestions[i].question}</span>${wrongAnswer}<span class="answers-list__answer--correct">${model.getQuestions[i].correctAnswer}</span>`;
 			frag.appendChild(li);
 		}
 
-		finalAnswersList.appendChild(frag);
+		_elems.finalAnswersList.appendChild(frag);
 
 	};
 
 	const _showFinalScore = function _showFinalScore() {
 
-		answersInner.classList.add('no-show');
+		_elems.answersInner.classList.add('no-show');
 
-		answerBox.appendChild(score);
+		views.questions.element('answerContainer').appendChild(_elems.scoreHolder);
 
-		questionHolder.textContent = "Quiz completed!";
-		score.textContent = ("You scored: " + model.getScore() + "/10");
-		score.classList.add('score');
+		views.questions.element('questionHolder').textContent = "Quiz completed!";
+		_elems.scoreHolder.textContent = ("You scored: " + model.getScore() + "/10");
+		_elems.scoreHolder.classList.add('score');
 
-		submit.classList.add("no-show");
-		restart.classList.remove("no-show");
+		views.questions.element('submit').classList.add("no-show");
+		_elems.restart.classList.remove("no-show");
 
 	};
 
 	const _resetView = function _resetView() {
-				answersInner.classList.remove('no-show');
-				answerBox.removeChild(score);
-				restart.classList.add("no-show");
-				submit.classList.remove("no-show");
-				correctAnswersBox.classList.add('no-show');
+		_elems.answersInner.classList.remove('no-show');
+		views.questions.element('answerContainer').removeChild(_elems.scoreHolder);
+		_elems.restart.classList.add("no-show");
+		views.questions.element('submit').classList.remove("no-show");
+		_elems.correctAnswersContainer.classList.add('no-show');
 	}
 
 	return {
-		setQuestionNumber: _setQuestionNumber,
-		questionView: questionView,
 		showFinalScore: _showFinalScore,
 		displayAnswers: _displayAnswers,
-		resetView: _resetView
+		resetView: _resetView,
+		element: function(el) {
+			return _elems[el];
+		}
+	}
+
+})();
+
+
+views.start = (function start() {
+
+	let _elems = {
+		startQuiz: document.getElementById('start-quiz')
+	}
+
+	const _showWelcomeMessage = function _showWelcomeMessage() {
+		views.questions.element('questionHolder').innerText = `A 2014 article in the Daily Telegraph published a list of the 10 hardest questions from 'Who Wants to Be a Millionaire?'.
+
+		How many can you get right?`;
+	}
+
+	const _animateIn = function _animateIn() {
+		let welcomeMessage = views.questions.element('questionHolder');
+		TweenLite.to(welcomeMessage, 0.5, {
+			opacity: 1,
+			x: -60,
+			ease: Circ.easeIn
+		});
+		TweenLite.to(_elems.startQuiz, 0.5, {
+			opacity: 1,
+			y: -15,
+			delay: 0.75,
+			ease: Circ.easeInOut
+		});
+	}
+
+	const _animateOut = function _animateOut() {
+		let welcomeMessage = views.questions.element('questionHolder');
+		TweenLite.to(welcomeMessage, 0.5, {
+			opacity: 0,
+			x: 60,
+			ease: Circ.easeIn
+		});
+		TweenLite.to(_elems.startQuiz, 0.5, {
+			opacity: 0,
+			y: 15,
+			x: 0,
+			delay: 0.5
+		});
+	}
+
+	return {
+		display: function() {
+			_showWelcomeMessage();
+
+			_animateIn();
+
+
+		},
+		element: function(el) {
+			return _elems[el];
+		},
+		animateOut: _animateOut
 	}
 
 })();
 
 
 
-const controller = (function controller() {
+// CONTROLLER
 
-	var _questionNumber = 0;
-	const submit = document.getElementById('submit-answer');
-	const restart = document.getElementById('restart-quiz');
-	const answerOptions = document.getElementsByClassName('answer');
+const controller = (function controller() {
 
 	// Add event listeners
 	const _addEventListeners = function _addEventListeners() {
-
+		let answerOptions = views.questions.element('answerOptions');
 		//Add event handlers for selecting answer
 		for (let i = 0; i < answerOptions.length; i++) {
 			answerOptions[i].addEventListener('click', function() {
@@ -251,20 +364,30 @@ const controller = (function controller() {
 		}
 
 		// Add event handler for submit button
-		submit.addEventListener('click', function() {
+		views.questions.element('submit').addEventListener('click', function() {
+			setTimeout(function(){
+			views.questions.animateIn();
+		}, 1000);
 			_checkAnswer();
-			_handleNextQuestion();
-
 			for (let i = 0; i < answerOptions.length; i++) {
 				answerOptions[i].classList.remove('selected');
 			}
+
 		});
 
-		restart.addEventListener('click', function() {
-			view.resetView();
+		views.finished.element('restart').addEventListener('click', function() {
+			views.finished.resetView();
 			_restart();
 
-		})
+		});
+
+		views.start.element('startQuiz').addEventListener('click', function() {
+			_handleNextQuestion();
+			//this.classList.add('no-show');
+			setTimeout(function(){
+			views.questions.animateIn();
+		}, 1000);
+		});
 	};
 
 
@@ -273,15 +396,17 @@ const controller = (function controller() {
 		if (!currentQuestion) {
 			_handleFinished();
 		} else {
-			view.questionView(currentQuestion);
-			view.setQuestionNumber(model.getQuestions.indexOf(currentQuestion));
+			views.start.animateOut();
+			setTimeout(function(){
+			views.questions.displayQuestions(currentQuestion);
+			views.questions.setQuestionNumber(model.getQuestions.indexOf(currentQuestion));
+		}, 1000)
 		}
 	};
 
 	const _handleFinished = function _handleFinished() {
-		view.setQuestionNumber();
-		view.displayAnswers();
-		view.showFinalScore();
+		views.finished.displayAnswers();
+		views.finished.showFinalScore();
 
 	}
 
@@ -293,91 +418,101 @@ const controller = (function controller() {
 	const _checkAnswer = function _checkAnswer() {
 
 		var question = model.getCurrentQuestion();
-		var answer = document.getElementsByClassName('selected')[0].innerText;
-		model.getCurrentQuestion().userAnswer = answer;
-
-
-		// Check whether user's answer is correct
-		// Answer 1
-		if (question.index === 1 && answer === question.answers[0]) {
-			model.increaseScore();
-			model.getCurrentQuestion().correctAnswer = question.answers[0];
-		} else if (question.index === 1 && answer !== question.answers[0]) {
-			model.getCurrentQuestion().correctAnswer = question.answers[0];
-		}
-		// Answer 2
-		else if (question.index === 2 && answer === question.answers[0]) {
-			model.increaseScore();
-			model.getCurrentQuestion().correctAnswer = question.answers[2];
-		} else if (question.index === 2 && answer !== question.answers[0]) {
-			model.getCurrentQuestion().correctAnswer = question.answers[0];
-		}
-		// Answer 3
-		else if (question.index === 3 && answer === question.answers[0]) {
-			model.increaseScore();
-			model.getCurrentQuestion().correctAnswer = question.answers[3];
-		} else if (question.index === 3 && answer !== question.answers[0]) {
-			model.getCurrentQuestion().correctAnswer = question.answers[0];
-		}
-		// Answer 4
-		else if (question.index === 4 && answer === question.answers[0]) {
-			model.increaseScore();
-			model.getCurrentQuestion().correctAnswer = question.answers[2];
-		} else if (question.index === 4 && answer !== question.answers[0]) {
-			model.getCurrentQuestion().correctAnswer = question.answers[0];
-		}
-		// Answer 5
-		else if (question.index === 5 && answer === question.answers[0]) {
-			model.increaseScore();
-			model.getCurrentQuestion().correctAnswer = question.answers[2];
-		} else if (question.index === 5 && answer !== question.answers[0]) {
-			model.getCurrentQuestion().correctAnswer = question.answers[0];
-		}
-		// Answer 6
-		else if (question.index === 6 && answer === question.answers[0]) {
-			model.increaseScore();
-			model.getCurrentQuestion().correctAnswer = question.answers[2];
-		} else if (question.index === 6 && answer !== question.answers[0]) {
-			model.getCurrentQuestion().correctAnswer = question.answers[0];
-		}
-		// Answer 7
-		else if (question.index === 7 && answer === question.answers[0]) {
-			model.increaseScore();
-			model.getCurrentQuestion().correctAnswer = question.answers[2];
-		} else if (question.index === 7 && answer !== question.answers[0]) {
-			model.getCurrentQuestion().correctAnswer = question.answers[0];
-		}
-		// Answer 8
-		else if (question.index === 8 && answer === question.answers[0]) {
-			model.increaseScore();
-			model.getCurrentQuestion().correctAnswer = question.answers[2];
-		} else if (question.index === 8 && answer !== question.answers[0]) {
-			model.getCurrentQuestion().correctAnswer = question.answers[0];
-		}
-		// Answer 9
-		else if (question.index === 9 && answer === question.answers[0]) {
-			model.increaseScore();
-			model.getCurrentQuestion().correctAnswer = question.answers[2];
-		} else if (question.index === 9 && answer !== question.answers[0]) {
-			model.getCurrentQuestion().correctAnswer = question.answers[0];
-		}
-		// Answer 10
-		else if (question.index === 10 && answer === question.answers[0]) {
-			model.increaseScore();
-			model.getCurrentQuestion().correctAnswer = question.answers[2];
-		} else if (question.index === 10 && answer !== question.answers[0]) {
-			model.getCurrentQuestion().correctAnswer = question.answers[0];
-		} else {
+		var chosenAnswer
+		if (!document.getElementsByClassName('selected')[0]) {
 			return;
+		} else {
+			chosenAnswer = document.getElementsByClassName('selected')[0].innerText;
+			_handleNextQuestion();
+			model.getCurrentQuestion().userAnswer = chosenAnswer;
+
+			// Check whether user's chosenAnswer is correct
+
+			// Answer 1
+			if (question.index === 1 && chosenAnswer === question.answers[0]) {
+				model.increaseScore();
+				model.getCurrentQuestion().correctAnswer = question.answers[0];
+
+			} else if (question.index === 1 && chosenAnswer !== question.answers[0]) {
+				model.getCurrentQuestion().correctAnswer = question.answers[0];
+			}
+			// Answer 2
+			else if (question.index === 2 && chosenAnswer === question.answers[0]) {
+				model.increaseScore();
+				model.getCurrentQuestion().correctAnswer = question.answers[2];
+			} else if (question.index === 2 && chosenAnswer !== question.answers[0]) {
+				model.getCurrentQuestion().correctAnswer = question.answers[0];
+			}
+			// Answer 3
+			else if (question.index === 3 && chosenAnswer === question.answers[0]) {
+				model.increaseScore();
+				model.getCurrentQuestion().correctAnswer = question.answers[3];
+			} else if (question.index === 3 && chosenAnswer !== question.answers[0]) {
+				model.getCurrentQuestion().correctAnswer = question.answers[0];
+			}
+			// Answer 4
+			else if (question.index === 4 && chosenAnswer === question.answers[0]) {
+				model.increaseScore();
+				model.getCurrentQuestion().correctAnswer = question.answers[2];
+			} else if (question.index === 4 && chosenAnswer !== question.answers[0]) {
+				model.getCurrentQuestion().correctAnswer = question.answers[0];
+			}
+			// Answer 5
+			else if (question.index === 5 && chosenAnswer === question.answers[0]) {
+				model.increaseScore();
+				model.getCurrentQuestion().correctAnswer = question.answers[2];
+			} else if (question.index === 5 && chosenAnswer !== question.answers[0]) {
+				model.getCurrentQuestion().correctAnswer = question.answers[0];
+			}
+			// Answer 6
+			else if (question.index === 6 && chosenAnswer === question.answers[0]) {
+				model.increaseScore();
+				model.getCurrentQuestion().correctAnswer = question.answers[2];
+			} else if (question.index === 6 && chosenAnswer !== question.answers[0]) {
+				model.getCurrentQuestion().correctAnswer = question.answers[0];
+			}
+			// Answer 7
+			else if (question.index === 7 && chosenAnswer === question.answers[0]) {
+				model.increaseScore();
+				model.getCurrentQuestion().correctAnswer = question.answers[2];
+			} else if (question.index === 7 && chosenAnswer !== question.answers[0]) {
+				model.getCurrentQuestion().correctAnswer = question.answers[0];
+			}
+			// Answer 8
+			else if (question.index === 8 && chosenAnswer === question.answers[0]) {
+				model.increaseScore();
+				model.getCurrentQuestion().correctAnswer = question.answers[2];
+			} else if (question.index === 8 && chosenAnswer !== question.answers[0]) {
+				model.getCurrentQuestion().correctAnswer = question.answers[0];
+			}
+			// Answer 9
+			else if (question.index === 9 && chosenAnswer === question.answers[0]) {
+				model.increaseScore();
+				model.getCurrentQuestion().correctAnswer = question.answers[2];
+			} else if (question.index === 9 && chosenAnswer !== question.answers[0]) {
+				model.getCurrentQuestion().correctAnswer = question.answers[0];
+			}
+			// Answer 10
+			else if (question.index === 10 && chosenAnswer === question.answers[0]) {
+				model.increaseScore();
+				model.getCurrentQuestion().correctAnswer = question.answers[2];
+			} else if (question.index === 10 && chosenAnswer !== question.answers[0]) {
+				model.getCurrentQuestion().correctAnswer = question.answers[0];
+			} else {
+				return;
+			}
 		}
 	};
 
 	return {
-		init: function() {
+		handleNextQuestion: _handleNextQuestion,
+		init: function init() {
+			views.start.display();
 			_addEventListeners();
-			_handleNextQuestion();
 		},
-		handleNextQuestion: _handleNextQuestion
+		startQuiz: function startQuiz() {
+			handleNextQuestion();
+		}
 	}
 
 })();

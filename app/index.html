@@ -40,18 +40,16 @@
                     </ul>
                 </div>
                     <div class="btn-wrapper">
-                        <button id="submit-answer" class="btn">Submit</button>
+                        <button id="submit-answer" class="btn no-show">Submit</button>
+                        <button id="start-quiz" class="btn">Take the quiz</button>
                         <button id="restart-quiz" class="btn no-show">Restart</button>
                     </div>
             </div>
-            <h2 id="question-number-lg" class="question-number">01<span>/10</span></h2>       
+            <h2 id="question-number-lg" class="question-number no-show">01<span>/10</span></h2>       
          <div id="correct-answers-box" class="answer-box no-show"><h2 id="answers-title" class="answers-title">Answers</h2><ol id="answer-list"></ol></div>
     </main>
     </div>
-    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-    <script>
-        window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
     <!-- build:js assets/scripts/app.js -->   
     <script src="assets/scripts/babel/app.js"></script><!-- endBuild -->
 </body>
