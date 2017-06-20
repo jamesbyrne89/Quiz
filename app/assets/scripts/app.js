@@ -376,8 +376,8 @@ views.finished = (function showFinishedView() {
 			delay: 0.7,
 			ease: Power2.easeInOut
 		});
-			tl3.to(_elems.answersTitle, 0, {
-			rotation: -90, 
+		tl3.to(_elems.answersTitle, 0, {
+			rotation: -90,
 		}).to(_elems.answersTitle, 0.5, {
 			opacity: 1,
 			y: -200,
@@ -489,250 +489,246 @@ const controller = (function controller() {
 	const _addEventListeners = function _addEventListeners() {
 		let answerOptions = views.questions.element('answerOptions');
 		//Add event handlers for selecting answer
+		answersInner.addEventListener('click', function(event) {
+
+			if (event.target) {
+				event.target.classList.toggle('selected');
+			} else {
+
+			}
+			this.classList.toggle('unselected');
+		});
+	}
+
+	// Add event handler for submit button
+	views.questions.element('submit').addEventListener('click', function() {
+		_checkAnswer();
 		for (let i = 0; i < answerOptions.length; i++) {
-			answerOptions[i].addEventListener('click', function() {
-				for (let i = 0; i < answerOptions.length; i++) {
-					if (answerOptions[i] === this) {
-						this.classList.toggle('selected');
-						this.classList.toggle('unselected');
-
-					} else {
-						answerOptions[i].classList.remove('selected');
-
-					}
-				}
-			});
+			answerOptions[i].classList.remove('selected');
 		}
 
-		// Add event handler for submit button
-		views.questions.element('submit').addEventListener('click', function() {
-			_checkAnswer();
-			for (let i = 0; i < answerOptions.length; i++) {
-				answerOptions[i].classList.remove('selected');
-			}
+	});
 
-		});
+	views.finished.element('restart').addEventListener('click', function() {
+		views.finished.resetView();
+		_restart();
 
-		views.finished.element('restart').addEventListener('click', function() {
-			views.finished.resetView();
-			_restart();
+	});
 
-		});
+	views.start.element('startQuiz').addEventListener('click', function() {
+		_handleNextQuestion();
+		this.style.display = 'none';
+		views.questions.element('submit').style.display = 'block';
+		setTimeout(function() {
+			views.questions.animateIn();
+		}, 1000);
+	});
+};
 
-		views.start.element('startQuiz').addEventListener('click', function() {
-			_handleNextQuestion();
-			this.style.display = 'none';
-			views.questions.element('submit').style.display = 'block';
+
+const _handleNextQuestion = function _handleNextQuestion() {
+	let currentQuestion = model.nextQuestion();
+	if (!currentQuestion) {
+		_handleFinished();
+	} else {
+		views.questions.displayQuestions(currentQuestion);
+		setTimeout(function() {
+			views.questions.setQuestionNumber(model.getQuestions.indexOf(currentQuestion));
+		}, 500);
+	}
+};
+
+const _handleFinished = function _handleFinished() {
+	views.finished.animateIn();
+	views.finished.displayAnswers();
+	views.finished.showFinalScore();
+
+}
+
+const _restart = function _restart() {
+	_handleNextQuestion();
+
+}
+
+const _checkAnswer = function _checkAnswer() {
+
+	var question = model.getCurrentQuestion();
+	var chosenAnswer
+	if (!document.getElementsByClassName('selected')[0]) {
+		return;
+	} else {
+		chosenAnswer = document.getElementsByClassName('selected')[0].innerText;
+		_handleNextQuestion();
+		model.getCurrentQuestion().userAnswer = chosenAnswer;
+
+		// Check whether user's chosenAnswer is correct
+
+		// Answer 1
+		if (question.index === 1 && chosenAnswer === question.answers[0]) {
+			model.increaseScore();
+			model.getCurrentQuestion().correctAnswer = question.answers[0];
+			views.questions.animateOut();
 			setTimeout(function() {
 				views.questions.animateIn();
-			}, 1000);
-		});
-	};
-
-
-	const _handleNextQuestion = function _handleNextQuestion() {
-		let currentQuestion = model.nextQuestion();
-		if (!currentQuestion) {
-			_handleFinished();
-		} else {
-			views.questions.displayQuestions(currentQuestion);
+			}, 750);
+		} else if (question.index === 1 && chosenAnswer !== question.answers[0]) {
+			model.getCurrentQuestion().correctAnswer = question.answers[0];
+			views.questions.animateOut();
 			setTimeout(function() {
-				views.questions.setQuestionNumber(model.getQuestions.indexOf(currentQuestion));
-			}, 500);
+				views.questions.animateIn();
+			}, 750);
 		}
-	};
+		// Answer 2
+		else if (question.index === 2 && chosenAnswer === question.answers[0]) {
+			model.increaseScore();
+			model.getCurrentQuestion().correctAnswer = question.answers[2];
+			views.questions.animateOut();
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
+		} else if (question.index === 2 && chosenAnswer !== question.answers[0]) {
+			model.getCurrentQuestion().correctAnswer = question.answers[0];
+			views.questions.animateOut();
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
+		}
+		// Answer 3
+		else if (question.index === 3 && chosenAnswer === question.answers[0]) {
+			model.increaseScore();
+			model.getCurrentQuestion().correctAnswer = question.answers[3];
+			views.questions.animateOut();
 
-	const _handleFinished = function _handleFinished() {
-		views.finished.animateIn();
-		views.finished.displayAnswers();
-		views.finished.showFinalScore();
-
-	}
-
-	const _restart = function _restart() {
-		_handleNextQuestion();
-
-	}
-
-	const _checkAnswer = function _checkAnswer() {
-
-		var question = model.getCurrentQuestion();
-		var chosenAnswer
-		if (!document.getElementsByClassName('selected')[0]) {
-			return;
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
+		} else if (question.index === 3 && chosenAnswer !== question.answers[0]) {
+			model.getCurrentQuestion().correctAnswer = question.answers[0];
+			views.questions.animateOut();
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
+		}
+		// Answer 4
+		else if (question.index === 4 && chosenAnswer === question.answers[0]) {
+			model.increaseScore();
+			model.getCurrentQuestion().correctAnswer = question.answers[2];
+			views.questions.animateOut();
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
+		} else if (question.index === 4 && chosenAnswer !== question.answers[0]) {
+			model.getCurrentQuestion().correctAnswer = question.answers[0];
+			views.questions.animateOut();
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
+		}
+		// Answer 5
+		else if (question.index === 5 && chosenAnswer === question.answers[0]) {
+			model.increaseScore();
+			model.getCurrentQuestion().correctAnswer = question.answers[2];
+			views.questions.animateOut();
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
+		} else if (question.index === 5 && chosenAnswer !== question.answers[0]) {
+			model.getCurrentQuestion().correctAnswer = question.answers[0];
+			views.questions.animateOut();
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
+		}
+		// Answer 6
+		else if (question.index === 6 && chosenAnswer === question.answers[0]) {
+			model.increaseScore();
+			model.getCurrentQuestion().correctAnswer = question.answers[2];
+			views.questions.animateOut();
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
+		} else if (question.index === 6 && chosenAnswer !== question.answers[0]) {
+			model.getCurrentQuestion().correctAnswer = question.answers[0];
+			views.questions.animateOut();
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
+		}
+		// Answer 7
+		else if (question.index === 7 && chosenAnswer === question.answers[0]) {
+			model.increaseScore();
+			model.getCurrentQuestion().correctAnswer = question.answers[2];
+			views.questions.animateOut();
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
+		} else if (question.index === 7 && chosenAnswer !== question.answers[0]) {
+			model.getCurrentQuestion().correctAnswer = question.answers[0];
+			views.questions.animateOut();
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
+		}
+		// Answer 8
+		else if (question.index === 8 && chosenAnswer === question.answers[0]) {
+			model.increaseScore();
+			model.getCurrentQuestion().correctAnswer = question.answers[2];
+			views.questions.animateOut();
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
+		} else if (question.index === 8 && chosenAnswer !== question.answers[0]) {
+			model.getCurrentQuestion().correctAnswer = question.answers[0];
+			views.questions.animateOut();
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
+		}
+		// Answer 9
+		else if (question.index === 9 && chosenAnswer === question.answers[0]) {
+			model.increaseScore();
+			model.getCurrentQuestion().correctAnswer = question.answers[2];
+			views.questions.animateOut();
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
+		} else if (question.index === 9 && chosenAnswer !== question.answers[0]) {
+			model.getCurrentQuestion().correctAnswer = question.answers[0];
+			views.questions.animateOut();
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
+		}
+		// Answer 10
+		else if (question.index === 10 && chosenAnswer === question.answers[0]) {
+			model.increaseScore();
+			model.getCurrentQuestion().correctAnswer = question.answers[2];
+			views.questions.animateOut();
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
+		} else if (question.index === 10 && chosenAnswer !== question.answers[0]) {
+			model.getCurrentQuestion().correctAnswer = question.answers[0];
+			views.questions.animateOut();
+			setTimeout(function() {
+				views.questions.animateIn();
+			}, 750);
 		} else {
-			chosenAnswer = document.getElementsByClassName('selected')[0].innerText;
-			_handleNextQuestion();
-			model.getCurrentQuestion().userAnswer = chosenAnswer;
-
-			// Check whether user's chosenAnswer is correct
-
-			// Answer 1
-			if (question.index === 1 && chosenAnswer === question.answers[0]) {
-				model.increaseScore();
-				model.getCurrentQuestion().correctAnswer = question.answers[0];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			} else if (question.index === 1 && chosenAnswer !== question.answers[0]) {
-				model.getCurrentQuestion().correctAnswer = question.answers[0];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			}
-			// Answer 2
-			else if (question.index === 2 && chosenAnswer === question.answers[0]) {
-				model.increaseScore();
-				model.getCurrentQuestion().correctAnswer = question.answers[2];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			} else if (question.index === 2 && chosenAnswer !== question.answers[0]) {
-				model.getCurrentQuestion().correctAnswer = question.answers[0];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			}
-			// Answer 3
-			else if (question.index === 3 && chosenAnswer === question.answers[0]) {
-				model.increaseScore();
-				model.getCurrentQuestion().correctAnswer = question.answers[3];
-				views.questions.animateOut();
-
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			} else if (question.index === 3 && chosenAnswer !== question.answers[0]) {
-				model.getCurrentQuestion().correctAnswer = question.answers[0];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			}
-			// Answer 4
-			else if (question.index === 4 && chosenAnswer === question.answers[0]) {
-				model.increaseScore();
-				model.getCurrentQuestion().correctAnswer = question.answers[2];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			} else if (question.index === 4 && chosenAnswer !== question.answers[0]) {
-				model.getCurrentQuestion().correctAnswer = question.answers[0];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			}
-			// Answer 5
-			else if (question.index === 5 && chosenAnswer === question.answers[0]) {
-				model.increaseScore();
-				model.getCurrentQuestion().correctAnswer = question.answers[2];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			} else if (question.index === 5 && chosenAnswer !== question.answers[0]) {
-				model.getCurrentQuestion().correctAnswer = question.answers[0];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			}
-			// Answer 6
-			else if (question.index === 6 && chosenAnswer === question.answers[0]) {
-				model.increaseScore();
-				model.getCurrentQuestion().correctAnswer = question.answers[2];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			} else if (question.index === 6 && chosenAnswer !== question.answers[0]) {
-				model.getCurrentQuestion().correctAnswer = question.answers[0];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			}
-			// Answer 7
-			else if (question.index === 7 && chosenAnswer === question.answers[0]) {
-				model.increaseScore();
-				model.getCurrentQuestion().correctAnswer = question.answers[2];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			} else if (question.index === 7 && chosenAnswer !== question.answers[0]) {
-				model.getCurrentQuestion().correctAnswer = question.answers[0];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			}
-			// Answer 8
-			else if (question.index === 8 && chosenAnswer === question.answers[0]) {
-				model.increaseScore();
-				model.getCurrentQuestion().correctAnswer = question.answers[2];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			} else if (question.index === 8 && chosenAnswer !== question.answers[0]) {
-				model.getCurrentQuestion().correctAnswer = question.answers[0];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			}
-			// Answer 9
-			else if (question.index === 9 && chosenAnswer === question.answers[0]) {
-				model.increaseScore();
-				model.getCurrentQuestion().correctAnswer = question.answers[2];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			} else if (question.index === 9 && chosenAnswer !== question.answers[0]) {
-				model.getCurrentQuestion().correctAnswer = question.answers[0];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			}
-			// Answer 10
-			else if (question.index === 10 && chosenAnswer === question.answers[0]) {
-				model.increaseScore();
-				model.getCurrentQuestion().correctAnswer = question.answers[2];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			} else if (question.index === 10 && chosenAnswer !== question.answers[0]) {
-				model.getCurrentQuestion().correctAnswer = question.answers[0];
-				views.questions.animateOut();
-				setTimeout(function() {
-					views.questions.animateIn();
-				}, 750);
-			} else {
-				return;
-			}
-		}
-	};
-
-	return {
-		handleNextQuestion: _handleNextQuestion,
-		init: function init() {
-			views.start.display();
-			_addEventListeners();
-		},
-		startQuiz: function startQuiz() {
-			handleNextQuestion();
+			return;
 		}
 	}
+};
+
+return {
+	handleNextQuestion: _handleNextQuestion,
+	init: function init() {
+		views.start.display();
+		_addEventListeners();
+	},
+	startQuiz: function startQuiz() {
+		handleNextQuestion();
+	}
+}
 
 })();
 
