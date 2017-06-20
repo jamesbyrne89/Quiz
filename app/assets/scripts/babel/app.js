@@ -10,7 +10,7 @@ var views = function setupViews() {
 var model = function model() {
 
 	var _score = 0;
-	var _currentQuestionNumber = 0;
+	var _currentQuestionNumber = 9;
 
 	// Declare list of questions and push to array
 
@@ -148,13 +148,13 @@ views.questions = function showQuestionView() {
 	};
 
 	var _displayQuestions = function _displayQuestions(currentQuestion) {
+		console.log('calling _displayQuestions');
 		views.start.hide();
 		setTimeout(function () {
-			_elems.questionHolder.innerText = currentQuestion.question;
+			_elems.questionHolder.innerHTML = currentQuestion.question;
 			for (var i = 0; i < _elems.answerBoxes.length; i++) {
-				_elems.answerBoxes[i].innerText = currentQuestion.answers[i];
+				_elems.answerBoxes[i].innerHTML = currentQuestion.answers[i];
 			}
-			//_animateIn();
 		}, 1000);
 	};
 
@@ -228,11 +228,11 @@ views.questions = function showQuestionView() {
 		var tl = new TimelineLite();
 
 		tl.to(_elems.backgroundQNumSecondDigit, 0.4, {
-			y: -360,
-			delay: 0.5,
+			y: -340,
+			delay: 0.3,
 			ease: Power4.easeOut
 		}).to(_elems.backgroundQNumSecondDigit, 0, {
-			y: 360,
+			y: 340,
 			ease: Power4.easeOut
 		}).to(_elems.backgroundQNumSecondDigit, 0.5, {
 			y: 0,
@@ -243,11 +243,11 @@ views.questions = function showQuestionView() {
 			var _tl = new TimelineLite();
 
 			_tl.to(_elems.backgroundQNumFirstDigit, 0.4, {
-				y: -360,
-				delay: 0.3,
+				y: -340,
+				delay: 0.45,
 				ease: Power4.easeOut
 			}).to(_elems.backgroundQNumFirstDigit, 0, {
-				y: 360,
+				y: 340,
 				ease: Power4.easeOut
 			}).to(_elems.backgroundQNumFirstDigit, 0.5, {
 				y: 0,
@@ -324,7 +324,7 @@ views.finished = function showFinishedView() {
 		var tl = new TimelineLite();
 		var tl2 = new TimelineLite();
 		var tl3 = new TimelineLite();
-
+		console.log('animating questions in');
 		tl2.to(views.questions.element('backgroundQNumWrapper'), 0.4, {
 			opacity: 0,
 			x: 100,
@@ -337,7 +337,7 @@ views.finished = function showFinishedView() {
 			opacity: 1,
 			ease: Power2.easeInOut
 		});
-
+		console.log(views.questions.element('questionHolder').style.opacity);
 		TweenLite.to(_elems.scoreHolder, 0.4, {
 			opacity: 1,
 			x: -40,
@@ -369,17 +369,34 @@ views.finished = function showFinishedView() {
 		TweenLite.to(_elems.correctAnswersContainer, 0.5, {
 			display: 'flex',
 			opacity: 1,
-			delay: 2,
+			delay: 1.5,
+			ease: Power2.easeInOut
+		});
+	};
+
+	var _animateOut = function _animateOut() {
+		var tl = new TimelineLite();
+
+		tl.to(_elems.correctAnswersContainer, 0.5, {
+			opacity: 0
+		}).to(_elems.correctAnswersContainer, 0.5, {
+			display: 'none',
 			ease: Power2.easeInOut
 		});
 	};
 
 	var _resetView = function _resetView() {
+		console.log('calling _resetView');
+		_animateOut();
 		_elems.answersInner.classList.remove('no-show');
 		views.questions.element('answerContainer').removeChild(_elems.scoreHolder);
 		_elems.restart.classList.add("no-show");
 		views.questions.element('submit').classList.remove("no-show");
 		_elems.correctAnswersContainer.classList.add('no-show');
+
+		setTimeout(function () {
+			views.questions.animateIn();
+		}, 1000);
 	};
 
 	return {
@@ -387,6 +404,7 @@ views.finished = function showFinishedView() {
 		displayAnswers: _displayAnswers,
 		resetView: _resetView,
 		animateIn: _animateIn,
+		animateOut: _animateOut,
 		element: function element(el) {
 			return _elems[el];
 		}
@@ -464,30 +482,28 @@ var controller = function controller() {
 	var _addEventListeners = function _addEventListeners() {
 		var answerOptions = views.questions.element('answerOptions');
 		//Add event handlers for selecting answer
-		for (var i = 0; i < answerOptions.length; i++) {
-			answerOptions[i].addEventListener('click', function () {
-				for (var _i = 0; _i < answerOptions.length; _i++) {
-					if (answerOptions[_i] === this) {
-						this.classList.toggle('selected');
-						this.classList.toggle('unselected');
-					} else {
-						answerOptions[_i].classList.remove('selected');
-					}
-				}
-			});
-		}
+		views.finished.element('answersInner').addEventListener('click', function (event) {
+			event.stopPropagation();
+			if (event.target) {
+				event.target.classList.toggle('selected');
+			} else {}
+		}, {
+			capture: false
+		});
 
 		// Add event handler for submit button
 		views.questions.element('submit').addEventListener('click', function () {
 			_checkAnswer();
-			for (var _i2 = 0; _i2 < answerOptions.length; _i2++) {
-				answerOptions[_i2].classList.remove('selected');
+			for (var i = 0; i < answerOptions.length; i++) {
+				answerOptions[i].classList.remove('selected');
 			}
 		});
 
 		views.finished.element('restart').addEventListener('click', function () {
 			views.finished.resetView();
-			_restart();
+			setTimeout(function () {
+				_restart();
+			}, 5000);
 		});
 
 		views.start.element('startQuiz').addEventListener('click', function () {
@@ -501,6 +517,7 @@ var controller = function controller() {
 	};
 
 	var _handleNextQuestion = function _handleNextQuestion() {
+		console.log('handling next question');
 		var currentQuestion = model.nextQuestion();
 		if (!currentQuestion) {
 			_handleFinished();
@@ -519,6 +536,7 @@ var controller = function controller() {
 	};
 
 	var _restart = function _restart() {
+		console.log('calling _restart');
 		_handleNextQuestion();
 	};
 

@@ -113,12 +113,13 @@ body {
 	letter-spacing: -10px;
 	color: #747474;
 	overflow: hidden;
+	height: 0.78em;
 	display: none;
 	position: relative;
 	top: 40px;
 	-webkit-box-flex: 0;
-	    -ms-flex: 0 1 750px;
-	        flex: 0 1 750px;
+	    -ms-flex: 0 0 750px;
+	        flex: 0 0 750px;
 	opacity: 0;
 	-webkit-box-pack: justify;
 	    -ms-flex-pack: justify;
