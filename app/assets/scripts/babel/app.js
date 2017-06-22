@@ -174,23 +174,33 @@ views.questions = function showQuestionView() {
 	var _animateIn = function _animateIn() {
 		console.log('Animating in');
 		var question = _elems.questionHolder;
+		var tl = new TimelineLite();
 		// Animate question
-		TweenLite.to(question, 0.4, {
+		question.style.opacity = 0;
+		console.log('questions holder opacity before in', question.style.opacity);
+		tl.to(_elems.questionHolder, 0, {
+			opacity: 0
+		}).to(_elems.questionHolder, 0.4, {
 			opacity: 1,
 			x: -40,
 			ease: Circ.easeIn
 		});
+		console.log('questions holder opacity after in', question.style.opacity
 		// Animate answers
-		TweenLite.to(_elems.submit, 0.5, {
+		);TweenLite.to(_elems.submit, 0.5, {
 			opacity: 1,
 			y: -15,
 			ease: Circ.easeIn
 		});
 		// Loop through answer boxes and set delay 
 		var delay = 0.8;
+
 		for (var i = 0; i < _elems.answerBoxes.length; i++) {
 			delay += 0.1;
-			TweenLite.to(_elems.answerBoxes[i], 0.3, {
+			var _tl = new TimelineLite();
+			_tl.to(_elems.answerBoxes[i], 0, {
+				opacity: 0
+			}).to(_elems.answerBoxes[i], 0.3, {
 				opacity: 1,
 				x: -60,
 				delay: delay,
@@ -240,9 +250,9 @@ views.questions = function showQuestionView() {
 		});
 
 		if (model.getQuestions.indexOf(model.getCurrentQuestion()) === 9) {
-			var _tl = new TimelineLite();
+			var _tl2 = new TimelineLite();
 
-			_tl.to(_elems.backgroundQNumFirstDigit, 0.4, {
+			_tl2.to(_elems.backgroundQNumFirstDigit, 0.4, {
 				y: -340,
 				delay: 0.45,
 				ease: Power4.easeOut
@@ -327,17 +337,16 @@ views.finished = function showFinishedView() {
 		console.log('animating questions in');
 		tl2.to(views.questions.element('backgroundQNumWrapper'), 0.4, {
 			opacity: 0,
-			x: 100,
-			ease: Power2.easeInOut
+			x: 100
 		}).to(views.questions.element('backgroundQNumWrapper'), 0.4, {
-			display: 'none',
-			ease: Power2.easeInOut
+			display: 'none'
 		});
+		console.log('question opacity before', views.questions.element('questionHolder').style.opacity);
 		TweenLite.to(views.questions.element('questionHolder'), 0.5, {
 			opacity: 1,
 			ease: Power2.easeInOut
 		});
-		console.log(views.questions.element('questionHolder').style.opacity);
+		console.log('question opacity after', views.questions.element('questionHolder').style.opacity);
 		TweenLite.to(_elems.scoreHolder, 0.4, {
 			opacity: 1,
 			x: -40,
@@ -376,27 +385,35 @@ views.finished = function showFinishedView() {
 
 	var _animateOut = function _animateOut() {
 		var tl = new TimelineLite();
-
+		var tl2 = new TimelineLite();
+		console.log('questions holder opacity before out', views.questions.element('questionHolder').style.opacity);
 		tl.to(_elems.correctAnswersContainer, 0.5, {
 			opacity: 0
 		}).to(_elems.correctAnswersContainer, 0.5, {
 			display: 'none',
 			ease: Power2.easeInOut
 		});
+
+		tl2.to(_elems.restart, 0.5, {
+			opacity: 0
+		}).to(_elems.restart, 0.5, {
+			display: 'none',
+			ease: Power2.easeInOut
+		});
+		_elems.answersInner.classList.remove('no-show');
+		TweenLite.to(_elems.answersInner, 0, {
+			opacity: 1
+		});
+		console.log('questions holder opacity after out', views.questions.element('questionHolder').style.opacity);
 	};
 
 	var _resetView = function _resetView() {
-		console.log('calling _resetView');
-		_animateOut();
-		_elems.answersInner.classList.remove('no-show');
+		console.log('resetting view');
 		views.questions.element('answerContainer').removeChild(_elems.scoreHolder);
-		_elems.restart.classList.add("no-show");
-		views.questions.element('submit').classList.remove("no-show");
-		_elems.correctAnswersContainer.classList.add('no-show');
-
-		setTimeout(function () {
-			views.questions.animateIn();
-		}, 1000);
+		views.questions.element('submit').classList.remove('no-show');
+		TweenLite.to(views.questions.element('submit'), 0, {
+			display: 'block'
+		});
 	};
 
 	return {
@@ -500,10 +517,7 @@ var controller = function controller() {
 		});
 
 		views.finished.element('restart').addEventListener('click', function () {
-			views.finished.resetView();
-			setTimeout(function () {
-				_restart();
-			}, 5000);
+			_restart();
 		});
 
 		views.start.element('startQuiz').addEventListener('click', function () {
@@ -537,6 +551,11 @@ var controller = function controller() {
 
 	var _restart = function _restart() {
 		console.log('calling _restart');
+		views.finished.animateOut();
+		setTimeout(function () {
+			views.finished.resetView();
+			views.questions.animateIn();
+		}, 500);
 		_handleNextQuestion();
 	};
 
@@ -717,7 +736,8 @@ var controller = function controller() {
 		},
 		startQuiz: function startQuiz() {
 			handleNextQuestion();
-		}
+		},
+		restart: _restart
 	};
 }();
 
