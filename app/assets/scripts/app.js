@@ -152,7 +152,6 @@ views.questions = (function showQuestionView() {
 
 	const _displayQuestions = function _displayQuestions(currentQuestion) {
 		console.log('calling _displayQuestions')
-		views.start.hide();
 		setTimeout(function() {
 			_elems.questionHolder.innerHTML = currentQuestion.question;
 			for (var i = 0; i < _elems.answerBoxes.length; i++) {
@@ -181,17 +180,14 @@ views.questions = (function showQuestionView() {
 		let question = _elems.questionHolder;
 		let tl = new TimelineLite();
 		// Animate question
-		question.style.opacity = 0;
-		console.log('questions holder opacity before in',question.style.opacity)
-		tl.to(_elems.questionHolder, 0, {
-			opacity: 0
-		}).to(_elems.questionHolder, 0.4, {
+		console.log('questions holder opacity before in', question.style.opacity)
+		tl.to(question, 0.4, {
 			opacity: 1,
 			x: -40,
 			ease: Circ.easeIn
 		});
-		console.log('questions holder opacity after in',question.style.opacity)
-		// Animate answers
+		console.log('questions holder opacity after in', question.style.opacity)
+			// Animate answers
 		TweenLite.to(_elems.submit, 0.5, {
 			opacity: 1,
 			y: -15,
@@ -199,7 +195,7 @@ views.questions = (function showQuestionView() {
 		});
 		// Loop through answer boxes and set delay 
 		let delay = 0.8;
-		
+
 		for (var i = 0; i < _elems.answerBoxes.length; i++) {
 			delay += 0.1;
 			let tl = new TimelineLite();
@@ -356,13 +352,12 @@ views.finished = (function showFinishedView() {
 		tl2.to(views.questions.element('backgroundQNumWrapper'), 0.4, {
 			opacity: 0,
 			x: 100
-		}).to(views.questions.element('backgroundQNumWrapper'), 0.4, {
+		}).to(views.questions.element('backgroundQNumWrapper'), 0, {
 			display: 'none'
 		});
 		console.log('question opacity before', views.questions.element('questionHolder').style.opacity)
 		TweenLite.to(views.questions.element('questionHolder'), 0.5, {
-			opacity: 1,
-			ease: Power2.easeInOut
+			opacity: 1
 		});
 		console.log('question opacity after', views.questions.element('questionHolder').style.opacity)
 		TweenLite.to(_elems.scoreHolder, 0.4, {
@@ -411,6 +406,10 @@ views.finished = (function showFinishedView() {
 			display: 'none',
 			ease: Power2.easeInOut
 		});
+		TweenLite.to(views.questions.element('questionHolder'), 0.5, {
+			opacity: 0,
+			ease: Power2.easeInOut
+		});
 
 		tl2.to(_elems.restart, 0.5, {
 			opacity: 0
@@ -418,10 +417,25 @@ views.finished = (function showFinishedView() {
 			display: 'none',
 			ease: Power2.easeInOut
 		});
-		_elems.answersInner.classList.remove('no-show');
+
 		TweenLite.to(_elems.answersInner, 0, {
 			opacity: 1
 		});
+		TweenLite.to(_elems.scoreHolder, 0.4, {
+			opacity: 0,
+			x: -40,
+			ease: Power2.easeInOut
+		});
+		setTimeout(() => {
+			_elems.answersInner.classList.remove('no-show');
+			views.questions.element('answerContainer').removeChild(_elems.scoreHolder);
+					TweenLite.to(views.questions.element('questionHolder'), 0, {
+			opacity: 0
+		});
+			TweenLite.to(_elems.answersInner, 0, {
+			opacity: 0
+		});
+		}, 500);
 		console.log('questions holder opacity after out', views.questions.element('questionHolder').style.opacity)
 
 	}
@@ -588,15 +602,15 @@ const controller = (function controller() {
 		console.log('calling _restart')
 		views.finished.animateOut();
 		setTimeout(() => {
-		views.finished.resetView();
-		views.questions.animateIn();
-	}, 500);
-		_handleNextQuestion();
+			views.questions.animateIn();
+			_handleNextQuestion();
+		}, 5000);
+
 
 	}
 
 	const _checkAnswer = function _checkAnswer() {
-
+		console.log('checking answer')
 		var question = model.getCurrentQuestion();
 		var chosenAnswer
 		if (!document.getElementsByClassName('selected')[0]) {
