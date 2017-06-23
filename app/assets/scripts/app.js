@@ -399,7 +399,7 @@ views.finished = (function showFinishedView() {
 	const _animateOut = function _animateOut() {
 		let tl = new TimelineLite();
 		let tl2 = new TimelineLite();
-		console.log('questions holder opacity before out', views.questions.element('questionHolder').style.opacity)
+		let tl3 = new TimelineLite();
 		tl.to(_elems.correctAnswersContainer, 0.5, {
 			opacity: 0
 		}).to(_elems.correctAnswersContainer, 0.5, {
@@ -426,15 +426,22 @@ views.finished = (function showFinishedView() {
 			x: -40,
 			ease: Power2.easeInOut
 		});
+				tl3.to(views.questions.element('backgroundQNumWrapper'), 0, {
+			display: 'flex',
+			delay: 0.5
+		}).to(views.questions.element('backgroundQNumWrapper'), 0.1, {
+			y: -40,
+			opacity: 1
+		});
 		setTimeout(() => {
 			_elems.answersInner.classList.remove('no-show');
+			views.questions.element('submit').classList.remove('no-show');
 			views.questions.element('answerContainer').removeChild(_elems.scoreHolder);
-					TweenLite.to(views.questions.element('questionHolder'), 0, {
-			opacity: 0
-		});
-			TweenLite.to(_elems.answersInner, 0, {
-			opacity: 0
-		});
+			TweenLite.to(views.questions.element('questionHolder'), 0, {
+				opacity: 0
+			});
+		views.questions.element('submit').style.display = 'block';
+		views.questions.element('backgroundQNumWrapper').classList.remove('no-show');
 		}, 500);
 		console.log('questions holder opacity after out', views.questions.element('questionHolder').style.opacity)
 
@@ -491,6 +498,7 @@ views.start = (function start() {
 	}
 
 	const _animateOut = function _animateOut() {
+		console.log('animate out start view')
 		let welcomeMessage = views.questions.element('questionHolder');
 		let tl = new TimelineLite();
 
@@ -568,6 +576,7 @@ const controller = (function controller() {
 		});
 
 		views.start.element('startQuiz').addEventListener('click', function() {
+			views.start.hide();
 			_handleNextQuestion();
 			this.style.display = 'none';
 			views.questions.element('submit').style.display = 'block';
@@ -596,18 +605,20 @@ const controller = (function controller() {
 		views.finished.displayAnswers();
 		views.finished.showFinalScore();
 
-	}
+	};
 
 	const _restart = function _restart() {
 		console.log('calling _restart')
 		views.finished.animateOut();
+		views.questions.animateOut();
 		setTimeout(() => {
 			views.questions.animateIn();
+		}, 1000);
+		setTimeout(() => {
 			_handleNextQuestion();
-		}, 5000);
+		}, 250);
 
-
-	}
+	};
 
 	const _checkAnswer = function _checkAnswer() {
 		console.log('checking answer')

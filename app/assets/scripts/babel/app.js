@@ -381,7 +381,7 @@ views.finished = function showFinishedView() {
 	var _animateOut = function _animateOut() {
 		var tl = new TimelineLite();
 		var tl2 = new TimelineLite();
-		console.log('questions holder opacity before out', views.questions.element('questionHolder').style.opacity);
+		var tl3 = new TimelineLite();
 		tl.to(_elems.correctAnswersContainer, 0.5, {
 			opacity: 0
 		}).to(_elems.correctAnswersContainer, 0.5, {
@@ -408,15 +408,22 @@ views.finished = function showFinishedView() {
 			x: -40,
 			ease: Power2.easeInOut
 		});
+		tl3.to(views.questions.element('backgroundQNumWrapper'), 0, {
+			display: 'flex',
+			delay: 0.5
+		}).to(views.questions.element('backgroundQNumWrapper'), 0.1, {
+			y: -40,
+			opacity: 1
+		});
 		setTimeout(function () {
 			_elems.answersInner.classList.remove('no-show');
+			views.questions.element('submit').classList.remove('no-show');
 			views.questions.element('answerContainer').removeChild(_elems.scoreHolder);
 			TweenLite.to(views.questions.element('questionHolder'), 0, {
 				opacity: 0
 			});
-			TweenLite.to(_elems.answersInner, 0, {
-				opacity: 0
-			});
+			views.questions.element('submit').style.display = 'block';
+			views.questions.element('backgroundQNumWrapper').classList.remove('no-show');
 		}, 500);
 		console.log('questions holder opacity after out', views.questions.element('questionHolder').style.opacity);
 	};
@@ -468,6 +475,7 @@ views.start = function start() {
 	};
 
 	var _animateOut = function _animateOut() {
+		console.log('animate out start view');
 		var welcomeMessage = views.questions.element('questionHolder');
 		var tl = new TimelineLite();
 
@@ -535,6 +543,7 @@ var controller = function controller() {
 		});
 
 		views.start.element('startQuiz').addEventListener('click', function () {
+			views.start.hide();
 			_handleNextQuestion();
 			this.style.display = 'none';
 			views.questions.element('submit').style.display = 'block';
@@ -566,10 +575,13 @@ var controller = function controller() {
 	var _restart = function _restart() {
 		console.log('calling _restart');
 		views.finished.animateOut();
+		views.questions.animateOut();
 		setTimeout(function () {
 			views.questions.animateIn();
+		}, 1000);
+		setTimeout(function () {
 			_handleNextQuestion();
-		}, 5000);
+		}, 250);
 	};
 
 	var _checkAnswer = function _checkAnswer() {
