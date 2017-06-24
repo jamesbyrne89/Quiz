@@ -10,7 +10,7 @@ var views = function setupViews() {
 var model = function model() {
 
 	var _score = 0;
-	var _currentQuestionNumber = 9;
+	var _currentQuestionNumber = 0;
 
 	// Declare list of questions and push to array
 
@@ -99,7 +99,6 @@ var model = function model() {
 
 	// Increase the user's score by one
 	var _increaseScore = function _increaseScore() {
-		console.log(_score);
 		_score++;
 	};
 
@@ -148,7 +147,6 @@ views.questions = function showQuestionView() {
 	};
 
 	var _displayQuestions = function _displayQuestions(currentQuestion) {
-		console.log('calling _displayQuestions');
 		setTimeout(function () {
 			_elems.questionHolder.innerHTML = currentQuestion.question;
 			for (var i = 0; i < _elems.answerBoxes.length; i++) {
@@ -171,19 +169,16 @@ views.questions = function showQuestionView() {
 	};
 
 	var _animateIn = function _animateIn() {
-		console.log('Animating in');
 		var question = _elems.questionHolder;
 		var tl = new TimelineLite();
 		// Animate question
-		console.log('questions holder opacity before in', question.style.opacity);
 		tl.to(question, 0.4, {
 			opacity: 1,
 			x: -40,
 			ease: Circ.easeIn
 		});
-		console.log('questions holder opacity after in', question.style.opacity
 		// Animate answers
-		);TweenLite.to(_elems.submit, 0.5, {
+		TweenLite.to(_elems.submit, 0.5, {
 			opacity: 1,
 			y: -15,
 			ease: Circ.easeIn
@@ -206,7 +201,6 @@ views.questions = function showQuestionView() {
 	};
 
 	var _animateOut = function _animateOut() {
-		console.log('Animating out');
 		var question = _elems.questionHolder;
 		TweenLite.to(question, 0.3, {
 			opacity: 0,
@@ -327,10 +321,11 @@ views.finished = function showFinishedView() {
 	};
 
 	var _animateIn = function _animateIn() {
+
 		var tl = new TimelineLite();
 		var tl2 = new TimelineLite();
 		var tl3 = new TimelineLite();
-		console.log('animating questions in');
+
 		tl2.to(views.questions.element('backgroundQNumWrapper'), 0.4, {
 			opacity: 0
 		}).to(views.questions.element('backgroundQNumWrapper'), 0, {
@@ -420,7 +415,6 @@ views.finished = function showFinishedView() {
 			views.questions.element('submit').style.display = 'block';
 			views.questions.element('backgroundQNumWrapper').classList.remove('no-show');
 		}, 500);
-		console.log('questions holder opacity after out', views.questions.element('questionHolder').style.opacity);
 	};
 
 	return {
@@ -460,7 +454,6 @@ views.start = function start() {
 	};
 
 	var _animateOut = function _animateOut() {
-		console.log('animate out start view');
 		var welcomeMessage = views.questions.element('questionHolder');
 		var tl = new TimelineLite();
 
@@ -540,7 +533,6 @@ var controller = function controller() {
 	};
 
 	var _handleNextQuestion = function _handleNextQuestion() {
-		console.log('handling next question');
 		var currentQuestion = model.nextQuestion();
 		if (!currentQuestion) {
 			_handleFinished();
@@ -559,7 +551,6 @@ var controller = function controller() {
 	};
 
 	var _restart = function _restart() {
-		console.log('calling _restart');
 		views.finished.animateOut();
 		views.questions.animateOut();
 		setTimeout(function () {
@@ -571,7 +562,6 @@ var controller = function controller() {
 	};
 
 	var _checkAnswer = function _checkAnswer() {
-		console.log('checking answer');
 		var question = model.getCurrentQuestion();
 		var chosenAnswer;
 		if (!document.getElementsByClassName('selected')[0]) {

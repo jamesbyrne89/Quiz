@@ -99,7 +99,6 @@ var model = function model() {
 
 	// Increase the user's score by one
 	var _increaseScore = function _increaseScore() {
-		console.log(_score);
 		_score++;
 	};
 
@@ -148,13 +147,11 @@ views.questions = function showQuestionView() {
 	};
 
 	var _displayQuestions = function _displayQuestions(currentQuestion) {
-		views.start.hide();
 		setTimeout(function () {
-			_elems.questionHolder.innerText = currentQuestion.question;
+			_elems.questionHolder.innerHTML = currentQuestion.question;
 			for (var i = 0; i < _elems.answerBoxes.length; i++) {
-				_elems.answerBoxes[i].innerText = currentQuestion.answers[i];
+				_elems.answerBoxes[i].innerHTML = currentQuestion.answers[i];
 			}
-			//_animateIn();
 		}, 1000);
 	};
 
@@ -172,10 +169,10 @@ views.questions = function showQuestionView() {
 	};
 
 	var _animateIn = function _animateIn() {
-		console.log('Animating in');
 		var question = _elems.questionHolder;
+		var tl = new TimelineLite();
 		// Animate question
-		TweenLite.to(question, 0.4, {
+		tl.to(question, 0.4, {
 			opacity: 1,
 			x: -40,
 			ease: Circ.easeIn
@@ -188,9 +185,13 @@ views.questions = function showQuestionView() {
 		});
 		// Loop through answer boxes and set delay 
 		var delay = 0.8;
+
 		for (var i = 0; i < _elems.answerBoxes.length; i++) {
 			delay += 0.1;
-			TweenLite.to(_elems.answerBoxes[i], 0.3, {
+			var _tl = new TimelineLite();
+			_tl.to(_elems.answerBoxes[i], 0, {
+				opacity: 0
+			}).to(_elems.answerBoxes[i], 0.3, {
 				opacity: 1,
 				x: -60,
 				delay: delay,
@@ -200,7 +201,6 @@ views.questions = function showQuestionView() {
 	};
 
 	var _animateOut = function _animateOut() {
-		console.log('Animating out');
 		var question = _elems.questionHolder;
 		TweenLite.to(question, 0.3, {
 			opacity: 0,
@@ -228,11 +228,11 @@ views.questions = function showQuestionView() {
 		var tl = new TimelineLite();
 
 		tl.to(_elems.backgroundQNumSecondDigit, 0.4, {
-			y: -360,
-			delay: 0.5,
+			y: -340,
+			delay: 0.3,
 			ease: Power4.easeOut
 		}).to(_elems.backgroundQNumSecondDigit, 0, {
-			y: 360,
+			y: 340,
 			ease: Power4.easeOut
 		}).to(_elems.backgroundQNumSecondDigit, 0.5, {
 			y: 0,
@@ -240,14 +240,14 @@ views.questions = function showQuestionView() {
 		});
 
 		if (model.getQuestions.indexOf(model.getCurrentQuestion()) === 9) {
-			var _tl = new TimelineLite();
+			var _tl2 = new TimelineLite();
 
-			_tl.to(_elems.backgroundQNumFirstDigit, 0.4, {
-				y: -360,
-				delay: 0.3,
+			_tl2.to(_elems.backgroundQNumFirstDigit, 0.4, {
+				y: -340,
+				delay: 0.45,
 				ease: Power4.easeOut
 			}).to(_elems.backgroundQNumFirstDigit, 0, {
-				y: 360,
+				y: 340,
 				ease: Power4.easeOut
 			}).to(_elems.backgroundQNumFirstDigit, 0.5, {
 				y: 0,
@@ -321,23 +321,19 @@ views.finished = function showFinishedView() {
 	};
 
 	var _animateIn = function _animateIn() {
+
 		var tl = new TimelineLite();
 		var tl2 = new TimelineLite();
 		var tl3 = new TimelineLite();
 
 		tl2.to(views.questions.element('backgroundQNumWrapper'), 0.4, {
-			opacity: 0,
-			x: 100,
-			ease: Power2.easeInOut
-		}).to(views.questions.element('backgroundQNumWrapper'), 0.4, {
-			display: 'none',
-			ease: Power2.easeInOut
+			opacity: 0
+		}).to(views.questions.element('backgroundQNumWrapper'), 0, {
+			display: 'none'
 		});
 		TweenLite.to(views.questions.element('questionHolder'), 0.5, {
-			opacity: 1,
-			ease: Power2.easeInOut
+			opacity: 1
 		});
-
 		TweenLite.to(_elems.scoreHolder, 0.4, {
 			opacity: 1,
 			x: -40,
@@ -363,30 +359,69 @@ views.finished = function showFinishedView() {
 		}).to(_elems.answersTitle, 0.5, {
 			opacity: 1,
 			y: -200,
-			delay: 2.5,
+			delay: 1,
 			ease: Power2.easeInOut
 		});
 		TweenLite.to(_elems.correctAnswersContainer, 0.5, {
 			display: 'flex',
 			opacity: 1,
-			delay: 2,
+			delay: 0.5,
 			ease: Power2.easeInOut
 		});
 	};
 
-	var _resetView = function _resetView() {
-		_elems.answersInner.classList.remove('no-show');
-		views.questions.element('answerContainer').removeChild(_elems.scoreHolder);
-		_elems.restart.classList.add("no-show");
-		views.questions.element('submit').classList.remove("no-show");
-		_elems.correctAnswersContainer.classList.add('no-show');
+	var _animateOut = function _animateOut() {
+		var tl = new TimelineLite();
+		var tl2 = new TimelineLite();
+		var tl3 = new TimelineLite();
+		tl.to(_elems.correctAnswersContainer, 0.3, {
+			opacity: 0
+		}).to(_elems.correctAnswersContainer, 0.3, {
+			display: 'none',
+			ease: Power2.easeInOut
+		});
+		TweenLite.to(views.questions.element('questionHolder'), 0.5, {
+			opacity: 0,
+			ease: Power2.easeInOut
+		});
+
+		tl2.to(_elems.restart, 0.5, {
+			opacity: 0
+		}).to(_elems.restart, 0.5, {
+			display: 'none',
+			ease: Power2.easeInOut
+		});
+		TweenLite.to(_elems.answersInner, 0, {
+			opacity: 1
+		});
+		TweenLite.to(_elems.scoreHolder, 0.4, {
+			opacity: 0,
+			x: -40,
+			ease: Power2.easeInOut
+		});
+		tl3.to(views.questions.element('backgroundQNumWrapper'), 0, {
+			display: 'flex',
+			delay: 1
+		}).to(views.questions.element('backgroundQNumWrapper'), 0.3, {
+			opacity: 1
+		});
+		setTimeout(function () {
+			_elems.answersInner.classList.remove('no-show');
+			views.questions.element('submit').classList.remove('no-show');
+			views.questions.element('answerContainer').removeChild(_elems.scoreHolder);
+			TweenLite.to(views.questions.element('questionHolder'), 0, {
+				opacity: 0
+			});
+			views.questions.element('submit').style.display = 'block';
+			views.questions.element('backgroundQNumWrapper').classList.remove('no-show');
+		}, 500);
 	};
 
 	return {
 		showFinalScore: _showFinalScore,
 		displayAnswers: _displayAnswers,
-		resetView: _resetView,
 		animateIn: _animateIn,
+		animateOut: _animateOut,
 		element: function element(el) {
 			return _elems[el];
 		}
@@ -410,7 +445,7 @@ views.start = function start() {
 			x: -60,
 			ease: Power2.easeInOut
 		});
-		TweenLite.to(_elems.startQuiz, 0.5, {
+		TweenLite.to(_elems.startQuiz, 0.4, {
 			opacity: 1,
 			y: -15,
 			delay: 0.75,
@@ -422,7 +457,7 @@ views.start = function start() {
 		var welcomeMessage = views.questions.element('questionHolder');
 		var tl = new TimelineLite();
 
-		TweenLite.to(welcomeMessage, 0.5, {
+		TweenLite.to(welcomeMessage, 0.4, {
 			opacity: 0,
 			x: 60,
 			ease: Circ.easeIn
@@ -436,7 +471,6 @@ views.start = function start() {
 			display: 'flex',
 			delay: 0.5
 		}).to(views.questions.element('backgroundQNumWrapper'), 0.1, {
-			y: -40,
 			opacity: 1,
 			ease: Circ.easeInOut
 		});
@@ -464,33 +498,31 @@ var controller = function controller() {
 	var _addEventListeners = function _addEventListeners() {
 		var answerOptions = views.questions.element('answerOptions');
 		//Add event handlers for selecting answer
-		for (var i = 0; i < answerOptions.length; i++) {
-			answerOptions[i].addEventListener('click', function () {
-				for (var _i = 0; _i < answerOptions.length; _i++) {
-					if (answerOptions[_i] === this) {
-						this.classList.toggle('selected');
-						this.classList.toggle('unselected');
-					} else {
-						answerOptions[_i].classList.remove('selected');
-					}
+
+		views.finished.element('answersInner').addEventListener('click', function (event) {
+			for (var i = 0; i < answerOptions.length; i++) {
+				if (answerOptions[i] === event.target) {
+					event.target.classList.toggle('selected');
+				} else {
+					answerOptions[i].classList.remove('selected');
 				}
-			});
-		}
+			}
+		});
 
 		// Add event handler for submit button
 		views.questions.element('submit').addEventListener('click', function () {
 			_checkAnswer();
-			for (var _i2 = 0; _i2 < answerOptions.length; _i2++) {
-				answerOptions[_i2].classList.remove('selected');
+			for (var i = 0; i < answerOptions.length; i++) {
+				answerOptions[i].classList.remove('selected');
 			}
 		});
 
 		views.finished.element('restart').addEventListener('click', function () {
-			views.finished.resetView();
 			_restart();
 		});
 
 		views.start.element('startQuiz').addEventListener('click', function () {
+			views.start.hide();
 			_handleNextQuestion();
 			this.style.display = 'none';
 			views.questions.element('submit').style.display = 'block';
@@ -519,11 +551,17 @@ var controller = function controller() {
 	};
 
 	var _restart = function _restart() {
-		_handleNextQuestion();
+		views.finished.animateOut();
+		views.questions.animateOut();
+		setTimeout(function () {
+			views.questions.animateIn();
+		}, 1000);
+		setTimeout(function () {
+			_handleNextQuestion();
+		}, 250);
 	};
 
 	var _checkAnswer = function _checkAnswer() {
-
 		var question = model.getCurrentQuestion();
 		var chosenAnswer;
 		if (!document.getElementsByClassName('selected')[0]) {
@@ -699,7 +737,8 @@ var controller = function controller() {
 		},
 		startQuiz: function startQuiz() {
 			handleNextQuestion();
-		}
+		},
+		restart: _restart
 	};
 }();
 
