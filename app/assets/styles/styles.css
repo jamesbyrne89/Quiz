@@ -129,7 +129,7 @@ body {
 	line-height: 400px;
 	font-weight: bold;
 	margin: 0;
-	width: 50%;
+	width: 740px;
 	letter-spacing: -10px;
 	color: $darkerGrey;
 	overflow: hidden;
@@ -137,9 +137,16 @@ body {
 	display: none;
 	position: relative;
 	top: 40px;
-	flex: 0 0 750px;
+	flex: 0 0 740px;
 	opacity: 0;
+	justify-content: flex-end;
+}
+
+.question-number {
+	display: flex;
+	flex-wrap: nowrap;
 	justify-content: space-between;
+	flex: 0 0 500px;
 }
 
 	.question-number--small {

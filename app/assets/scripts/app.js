@@ -350,16 +350,13 @@ views.finished = (function showFinishedView() {
 		let tl3 = new TimelineLite();
 		console.log('animating questions in')
 		tl2.to(views.questions.element('backgroundQNumWrapper'), 0.4, {
-			opacity: 0,
-			x: 100
+			opacity: 0
 		}).to(views.questions.element('backgroundQNumWrapper'), 0, {
 			display: 'none'
 		});
-		console.log('question opacity before', views.questions.element('questionHolder').style.opacity)
 		TweenLite.to(views.questions.element('questionHolder'), 0.5, {
 			opacity: 1
 		});
-		console.log('question opacity after', views.questions.element('questionHolder').style.opacity)
 		TweenLite.to(_elems.scoreHolder, 0.4, {
 			opacity: 1,
 			x: -40,
@@ -385,13 +382,13 @@ views.finished = (function showFinishedView() {
 		}).to(_elems.answersTitle, 0.5, {
 			opacity: 1,
 			y: -200,
-			delay: 2.5,
+			delay: 1,
 			ease: Power2.easeInOut
 		});
 		TweenLite.to(_elems.correctAnswersContainer, 0.5, {
 			display: 'flex',
 			opacity: 1,
-			delay: 1.5,
+			delay: 0.5,
 			ease: Power2.easeInOut
 		});
 	}
@@ -400,9 +397,9 @@ views.finished = (function showFinishedView() {
 		let tl = new TimelineLite();
 		let tl2 = new TimelineLite();
 		let tl3 = new TimelineLite();
-		tl.to(_elems.correctAnswersContainer, 0.5, {
+		tl.to(_elems.correctAnswersContainer, 0.3, {
 			opacity: 0
-		}).to(_elems.correctAnswersContainer, 0.5, {
+		}).to(_elems.correctAnswersContainer, 0.3, {
 			display: 'none',
 			ease: Power2.easeInOut
 		});
@@ -417,7 +414,6 @@ views.finished = (function showFinishedView() {
 			display: 'none',
 			ease: Power2.easeInOut
 		});
-
 		TweenLite.to(_elems.answersInner, 0, {
 			opacity: 1
 		});
@@ -426,11 +422,10 @@ views.finished = (function showFinishedView() {
 			x: -40,
 			ease: Power2.easeInOut
 		});
-				tl3.to(views.questions.element('backgroundQNumWrapper'), 0, {
+		tl3.to(views.questions.element('backgroundQNumWrapper'), 0, {
 			display: 'flex',
-			delay: 0.5
-		}).to(views.questions.element('backgroundQNumWrapper'), 0.1, {
-			y: -40,
+			delay: 1
+		}).to(views.questions.element('backgroundQNumWrapper'), 0.3, {
 			opacity: 1
 		});
 		setTimeout(() => {
@@ -440,26 +435,17 @@ views.finished = (function showFinishedView() {
 			TweenLite.to(views.questions.element('questionHolder'), 0, {
 				opacity: 0
 			});
-		views.questions.element('submit').style.display = 'block';
-		views.questions.element('backgroundQNumWrapper').classList.remove('no-show');
+			views.questions.element('submit').style.display = 'block';
+			views.questions.element('backgroundQNumWrapper').classList.remove('no-show');
 		}, 500);
 		console.log('questions holder opacity after out', views.questions.element('questionHolder').style.opacity)
 
 	}
 
-	const _resetView = function _resetView() {
-		console.log('resetting view')
-		views.questions.element('answerContainer').removeChild(_elems.scoreHolder);
-		views.questions.element('submit').classList.remove('no-show');
-		TweenLite.to(views.questions.element('submit'), 0, {
-			display: 'block'
-		});
-	}
 
 	return {
 		showFinalScore: _showFinalScore,
 		displayAnswers: _displayAnswers,
-		resetView: _resetView,
 		animateIn: _animateIn,
 		animateOut: _animateOut,
 		element: function(el) {
@@ -489,7 +475,7 @@ views.start = (function start() {
 			x: -60,
 			ease: Power2.easeInOut
 		});
-		TweenLite.to(_elems.startQuiz, 0.5, {
+		TweenLite.to(_elems.startQuiz, 0.4, {
 			opacity: 1,
 			y: -15,
 			delay: 0.75,
@@ -502,7 +488,7 @@ views.start = (function start() {
 		let welcomeMessage = views.questions.element('questionHolder');
 		let tl = new TimelineLite();
 
-		TweenLite.to(welcomeMessage, 0.5, {
+		TweenLite.to(welcomeMessage, 0.4, {
 			opacity: 0,
 			x: 60,
 			ease: Circ.easeIn
@@ -516,7 +502,6 @@ views.start = (function start() {
 			display: 'flex',
 			delay: 0.5
 		}).to(views.questions.element('backgroundQNumWrapper'), 0.1, {
-			y: -40,
 			opacity: 1,
 			ease: Circ.easeInOut
 		});
@@ -549,16 +534,15 @@ const controller = (function controller() {
 	const _addEventListeners = function _addEventListeners() {
 		let answerOptions = views.questions.element('answerOptions');
 		//Add event handlers for selecting answer
+		
 		views.finished.element('answersInner').addEventListener('click', function(event) {
-			event.stopPropagation();
-			if (event.target) {
+			for (let i=0; i < answerOptions.length; i++) {
+			if ( answerOptions[i] === event.target) {
 				event.target.classList.toggle('selected');
 			} else {
-
+				answerOptions[i].classList.remove('selected');
 			}
-
-		}, {
-			capture: false
+		}
 		});
 
 		// Add event handler for submit button
