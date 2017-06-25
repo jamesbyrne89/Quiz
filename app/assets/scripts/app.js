@@ -623,31 +623,31 @@ const controller = (function controller() {
 				}, 750);
 			}
 			// Answer 2
-			else if (question.index === 2 && chosenAnswer === question.answers[0]) {
+			else if (question.index === 2 && chosenAnswer === question.answers[2]) {
 				model.increaseScore();
 				model.getCurrentQuestion().correctAnswer = question.answers[2];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
 				}, 750);
-			} else if (question.index === 2 && chosenAnswer !== question.answers[0]) {
-				model.getCurrentQuestion().correctAnswer = question.answers[0];
+			} else if (question.index === 2 && chosenAnswer !== question.answers[2]) {
+				model.getCurrentQuestion().correctAnswer = question.answers[2];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
 				}, 750);
 			}
 			// Answer 3
-			else if (question.index === 3 && chosenAnswer === question.answers[0]) {
+			else if (question.index === 3 && chosenAnswer === question.answers[2]) {
 				model.increaseScore();
-				model.getCurrentQuestion().correctAnswer = question.answers[3];
+				model.getCurrentQuestion().correctAnswer = question.answers[2];
 				views.questions.animateOut();
 
 				setTimeout(function() {
 					views.questions.animateIn();
 				}, 750);
-			} else if (question.index === 3 && chosenAnswer !== question.answers[0]) {
-				model.getCurrentQuestion().correctAnswer = question.answers[0];
+			} else if (question.index === 3 && chosenAnswer !== question.answers[2]) {
+				model.getCurrentQuestion().correctAnswer = question.answers[2];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
@@ -656,7 +656,7 @@ const controller = (function controller() {
 			// Answer 4
 			else if (question.index === 4 && chosenAnswer === question.answers[0]) {
 				model.increaseScore();
-				model.getCurrentQuestion().correctAnswer = question.answers[2];
+				model.getCurrentQuestion().correctAnswer = question.answers[0];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
@@ -669,45 +669,45 @@ const controller = (function controller() {
 				}, 750);
 			}
 			// Answer 5
-			else if (question.index === 5 && chosenAnswer === question.answers[0]) {
+			else if (question.index === 5 && chosenAnswer === question.answers[2]) {
 				model.increaseScore();
 				model.getCurrentQuestion().correctAnswer = question.answers[2];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
 				}, 750);
-			} else if (question.index === 5 && chosenAnswer !== question.answers[0]) {
-				model.getCurrentQuestion().correctAnswer = question.answers[0];
+			} else if (question.index === 5 && chosenAnswer !== question.answers[2]) {
+				model.getCurrentQuestion().correctAnswer = question.answers[2];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
 				}, 750);
 			}
 			// Answer 6
-			else if (question.index === 6 && chosenAnswer === question.answers[0]) {
+			else if (question.index === 6 && chosenAnswer === question.answers[2]) {
 				model.increaseScore();
 				model.getCurrentQuestion().correctAnswer = question.answers[2];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
 				}, 750);
-			} else if (question.index === 6 && chosenAnswer !== question.answers[0]) {
-				model.getCurrentQuestion().correctAnswer = question.answers[0];
+			} else if (question.index === 6 && chosenAnswer !== question.answers[2]) {
+				model.getCurrentQuestion().correctAnswer = question.answers[2];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
 				}, 750);
 			}
 			// Answer 7
-			else if (question.index === 7 && chosenAnswer === question.answers[0]) {
+			else if (question.index === 7 && chosenAnswer === question.answers[2]) {
 				model.increaseScore();
 				model.getCurrentQuestion().correctAnswer = question.answers[2];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
 				}, 750);
-			} else if (question.index === 7 && chosenAnswer !== question.answers[0]) {
-				model.getCurrentQuestion().correctAnswer = question.answers[0];
+			} else if (question.index === 7 && chosenAnswer !== question.answers[2]) {
+				model.getCurrentQuestion().correctAnswer = question.answers[2];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
@@ -716,7 +716,7 @@ const controller = (function controller() {
 			// Answer 8
 			else if (question.index === 8 && chosenAnswer === question.answers[0]) {
 				model.increaseScore();
-				model.getCurrentQuestion().correctAnswer = question.answers[2];
+				model.getCurrentQuestion().correctAnswer = question.answers[0];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
@@ -731,7 +731,7 @@ const controller = (function controller() {
 			// Answer 9
 			else if (question.index === 9 && chosenAnswer === question.answers[0]) {
 				model.increaseScore();
-				model.getCurrentQuestion().correctAnswer = question.answers[2];
+				model.getCurrentQuestion().correctAnswer = question.answers[0];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
@@ -746,7 +746,7 @@ const controller = (function controller() {
 			// Answer 10
 			else if (question.index === 10 && chosenAnswer === question.answers[0]) {
 				model.increaseScore();
-				model.getCurrentQuestion().correctAnswer = question.answers[2];
+				model.getCurrentQuestion().correctAnswer = question.answers[0];
 				views.questions.animateOut();
 				setTimeout(function() {
 					views.questions.animateIn();
