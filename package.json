@@ -28,7 +28,7 @@
     "imagemin-jpeg-recompress": "^6.0.0",
     "postcss-import": "^9.1.0",
     "postcss-mixins": "^6.2.2",
-    "postcss-nested": "^1.0.0",
+    "postcss-nested": "^5.0.6",
     "postcss-simple-vars": "^3.0.0",
     "webpack": "^4.39.1",
     "webpack-stats-plugin": "^0.1.5"
